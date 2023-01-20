@@ -1,6 +1,11 @@
 <h1>TESTE</h1>
-<form action="/download" method="post">
-<label for="url">Url do video:</label>
+<form action="/getlink" method="post">
+<label for="url">{{title}}</label>
 <input type="text" name="url" id="url">
-<button type="submit">Baixar</button>
+<select name="qualidade" id="qualidade">
+    {{#each qualidades}}
+        <option value="{{qualidades}}">itag: {{qualidades}}</option>
+    {{/each}}
+</select>
+<button type="submit">Converter video</button>
 </form>

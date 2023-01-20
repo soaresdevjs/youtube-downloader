@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+<form action="/download" method="post">
+<input type="hidden" name="url" value="{{url}}">
+<input type="hidden" name="titulo" value="{{title}}">
+<select name="qualidade" id="qualidade">
+{{#each qualidades.numbers}}
+    <option value="{{0}}{{1}}{{2}}">{{0}}{{1}}{{2}}</option>
+{{/each}}
+</select>
+<button type="submit">Download</button>
+</form>

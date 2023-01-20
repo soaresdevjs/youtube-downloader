@@ -1,11 +1,11 @@
 const express = require('express');
 const ytdl = require('ytdl-core');
 const cp = require('child_process');
-const readline = require('readline');
 const ffmpeg = require('ffmpeg-static');
 const fs = require('fs')
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const { resolveSoa } = require('dns');
 
 const app = express();
 
@@ -23,44 +23,40 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+app.post('/getlink', (req, res) => {
+const ref = req.body.url;
+
+ytdl.getInfo(ref).then((info) => info).then(async info => {
+  let title;
+  let itags = [];
+  let qualidades = {}
+
+  const itagYtdl = [18, 137, 248, 136, 247, 135, 134]
+  for(i = 0; i < info.formats.length; i++){
+    itags.push(info.formats[i].itag)
+    itags.filter(item => itagYtdl.includes(item))
+    qualidades.itags = Object.assign({}, itags.filter(item => itagYtdl.includes(item)));
+    qualidades.numbers = Object.assign({},itags.filter(item => itagYtdl.includes(item)).toString().split(','))
+  }
+  title = info.videoDetails.title
+  console.log(qualidades)
+  res.render('download', {title: title, qualidades: qualidades, url: ref, })
+});
+})
+
+app.get('/download', (req, res) => {
+  res.send('arquivo baixado!')
+})
+
 app.post('/download', (req, res) => {
+  const randomID = Math.random() * 100000000000000000
   const ref = req.body.url;
-  const tracker = {
-    start: Date.now(),
-   audio: { downloaded: 0, total: Infinity },
-   video: { downloaded: 0, total: Infinity },
-   merged: { frame: 0, speed: '0x', fps: 0 },
-  };
+  console.log("qualidade:" + `${req.body.qualidade}`)
+  const titulo = req.body.titulo
 
 // Get audio and video streams
-const audio = ytdl(ref, { quality: 'highestaudio' })
-  .on('progress', (_, downloaded, total) => {
-    tracker.audio = { downloaded, total };
-  });
-const video = ytdl(ref, { quality: 'highestvideo' })
-  .on('progress', (_, downloaded, total) => {
-    tracker.video = { downloaded, total };
-  });
-
-// Prepare the progress bar
-let progressbarHandle = null;
-const progressbarInterval = 1000;
-const showProgress = () => {
-  readline.cursorTo(process.stdout, 0);
-  const toMB = i => (i / 1024 / 1024).toFixed(2);
-
-  process.stdout.write(`Audio  | ${(tracker.audio.downloaded / tracker.audio.total * 100).toFixed(2)}% processed `);
-  process.stdout.write(`(${toMB(tracker.audio.downloaded)}MB of ${toMB(tracker.audio.total)}MB).${' '.repeat(10)}\n`);
-
-  process.stdout.write(`Video  | ${(tracker.video.downloaded / tracker.video.total * 100).toFixed(2)}% processed `);
-  process.stdout.write(`(${toMB(tracker.video.downloaded)}MB of ${toMB(tracker.video.total)}MB).${' '.repeat(10)}\n`);
-
-  process.stdout.write(`Merged | processing frame ${tracker.merged.frame} `);
-  process.stdout.write(`(at ${tracker.merged.fps} fps => ${tracker.merged.speed}).${' '.repeat(10)}\n`);
-
-  process.stdout.write(`running for: ${((Date.now() - tracker.start) / 1000 / 60).toFixed(2)} Minutes.`);
-  readline.moveCursor(process.stdout, 0, -3);
-};
+const audio = ytdl(ref, { quality: 'highestaudio' });
+const video = ytdl(ref, { quality: req.body.qualidade });
 
 // Start the ffmpeg child process
 const ffmpegProcess = cp.spawn(ffmpeg, [
@@ -77,48 +73,35 @@ const ffmpegProcess = cp.spawn(ffmpeg, [
   // Keep encoding
   '-c:v', 'copy',
   // Define output file
-  'video-audio.mp4',
+  '/public/' + randomID + '.mp4',
 ], {
   windowsHide: true,
   stdio: [
     /* Standard: stdin, stdout, stderr */
     'inherit', 'inherit', 'inherit',
     /* Custom: pipe:3, pipe:4, pipe:5 */
-    'pipe', 'pipe', 'pipe', 'pipe'
+    'pipe', 'pipe', 'pipe', 'pipe', 'pipe'
   ],
 });
-ffmpegProcess.on('close', () => {
-  console.log('done');
-  // Cleanup
-  process.stdout.write('\n\n\n\n');
-  clearInterval(progressbarHandle);
+
+ffmpegProcess.stdio[3].on('data', () => {
+  console.log('convertendo...')
 });
 
-// Link streams
-// FFmpeg creates the transformer streams and we just have to insert / read data
-ffmpegProcess.stdio[3].on('data', chunk => {
-  // Start the progress bar
-  if (!progressbarHandle) progressbarHandle = setInterval(showProgress, progressbarInterval);
-  const lines = chunk.toString().trim().split('\n');
-  const args = {};
-  for (const l of lines) {
-    const [key, value] = l.split('=');
-    args[key.trim()] = value.trim();
-  }
-  tracker.merged = args;
-});
 audio.pipe(ffmpegProcess.stdio[4]);
 video.pipe(ffmpegProcess.stdio[5]);
 ffmpegProcess.stdio[6].on('end', () => {
-    res.setHeader('Content-disposition', 'attachment; filename=video-audio.mp4');
-    res.setHeader('Content-type', 'video/mp4');
-    const finalFile = fs.createReadStream('video-audio.mp4')
+    res.attachment(`ydownload.com.br_${encodeURI(titulo)}.mp4`);
+    res.contentType('video/mp4')
+    const finalFile = fs.createReadStream(`${randomID}.mp4`)
     finalFile.pipe(res)
-    fs.unlink('video-audio.mp4', function (err){
-      if (err) throw err;
-      console.log('Arquivo deletado!');
+    finalFile.on('end', () => {
+      fs.unlink(`${randomID}.mp4`, function (err){
+        if (err) throw err;
+        console.log('Arquivo deletado!');
+      })
     })
-})
+  })
 });
 
 
