@@ -6,6 +6,7 @@ const fs = require('fs')
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const { resolveSoa } = require('dns');
+const crypto = require('crypto');
 
 const app = express();
 
@@ -44,30 +45,29 @@ ytdl.getInfo(ref).then((info) => info).then(async info => {
 });
 })
 
-// Objeto para armazenar endereços IP em uso
-const inUseIPs = {};
-
 app.post('/download', (req, res) => {
-  // Capturar o endereço IP do usuário
-  const userIP = req.ip;
   const ref = req.body.url;
+  const inUseTokens = {};
+  // Gerar token aleatório
+  const token = crypto.randomBytes(20).toString('hex');
 
-  // Verificar se o endereço IP já está em uso
-  if (inUseIPs[userIP]) {
+  // Verificar se o token já está em uso
+  if (inUseTokens[token]) {
     res.status(429).send('Too Many Requests');
     return;
   }
 
-  // Marcar o endereço IP como em uso
-  inUseIPs[userIP] = true;
+  // Marcar o token como em uso
+  inUseTokens[token] = true;
+
 
   // Iniciar a requisição
-  ytdl(ref, { filter: 'audioonly' })
-    .pipe(fs.createWriteStream(`${userIP}.mp3`))
+  ytdl(ref, { filter: 'audioandvideo' })
+    .pipe(fs.createWriteStream(`${userIP}.mp4`))
     .on('finish', () => {
       // Marcar o endereço IP como não em uso
       delete inUseIPs[userIP];
-      res.download(`${userIP}.mp3`);
+      res.download(`${userIP}.mp4`);
     });
 });
 
