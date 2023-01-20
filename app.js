@@ -62,7 +62,7 @@ app.post('/download', (req, res) => {
 
 
   // Iniciar a requisição
-  ytdl(url, { quality: 'audioandvideo' })
+  ytdl(ref, { quality: 'audioandvideo' })
     .pipe(fs.createWriteStream(`${token}.mp4`))
     .on('finish', () => {
       // Marcar o token como não em uso
