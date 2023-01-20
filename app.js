@@ -44,10 +44,6 @@ ytdl.getInfo(ref).then((info) => info).then(async info => {
 });
 })
 
-app.get('/download', (req, res) => {
-  res.send('arquivo baixado!')
-})
-
 app.post('/download', (req, res) => {
   const randomID = Math.random() * 100000000000000000
   const ref = req.body.url;
@@ -73,7 +69,7 @@ const ffmpegProcess = cp.spawn(ffmpeg, [
   // Keep encoding
   '-c:v', 'copy',
   // Define output file
-  '/public/' + randomID + '.mp4',
+  randomID + '.mp4',
 ], {
   windowsHide: true,
   stdio: [
@@ -91,10 +87,11 @@ ffmpegProcess.stdio[3].on('data', () => {
 audio.pipe(ffmpegProcess.stdio[4]);
 video.pipe(ffmpegProcess.stdio[5]);
 ffmpegProcess.stdio[6].on('end', () => {
-    res.attachment(`ydownload.com.br_${encodeURI(titulo)}.mp4`);
-    res.contentType('video/mp4')
+    res.setHeader('Content-disposition', `attachment; filename="ydownload.com.br_${encodeURI(titulo)}.mp4"`);
+    res.setHeader('Content-type', 'video/mp4');
     const finalFile = fs.createReadStream(`${randomID}.mp4`)
     finalFile.pipe(res)
+    res.redirect('/')
     finalFile.on('end', () => {
       fs.unlink(`${randomID}.mp4`, function (err){
         if (err) throw err;
