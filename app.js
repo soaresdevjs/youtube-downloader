@@ -44,62 +44,89 @@ ytdl.getInfo(ref).then((info) => info).then(async info => {
 });
 })
 
+// Objeto para armazenar endereços IP em uso
+const inUseIPs = {};
+
 app.post('/download', (req, res) => {
-  const randomID = Math.random() * 100000000000000000
+  // Capturar o endereço IP do usuário
+  const userIP = req.ip;
   const ref = req.body.url;
-  console.log("qualidade:" + `${req.body.qualidade}`)
-  const titulo = req.body.titulo
 
-// Get audio and video streams
-const audio = ytdl(ref, { quality: 'highestaudio' });
-const video = ytdl(ref, { quality: req.body.qualidade });
+  // Verificar se o endereço IP já está em uso
+  if (inUseIPs[userIP]) {
+    res.status(429).send('Too Many Requests');
+    return;
+  }
 
-// Start the ffmpeg child process
-const ffmpegProcess = cp.spawn(ffmpeg, [
-  // Remove ffmpeg's console spamming
-  '-loglevel', '8', '-hide_banner',
-  // Redirect/Enable progress messages
-  '-progress', 'pipe:3',
-  // Set inputs
-  '-i', 'pipe:4',
-  '-i', 'pipe:5',
-  // Map audio & video from streams
-  '-map', '0:a',
-  '-map', '1:v',
-  // Keep encoding
-  '-c:v', 'copy',
-  // Define output file
-  randomID + '.mp4',
-], {
-  windowsHide: true,
-  stdio: [
-    /* Standard: stdin, stdout, stderr */
-    'inherit', 'inherit', 'inherit',
-    /* Custom: pipe:3, pipe:4, pipe:5 */
-    'pipe', 'pipe', 'pipe', 'pipe', 'pipe'
-  ],
+  // Marcar o endereço IP como em uso
+  inUseIPs[userIP] = true;
+
+  // Iniciar a requisição
+  ytdl(ref, { filter: 'audioonly' })
+    .pipe(fs.createWriteStream(`${userIP}.mp3`))
+    .on('finish', () => {
+      // Marcar o endereço IP como não em uso
+      delete inUseIPs[userIP];
+      res.download(`${userIP}.mp3`);
+    });
 });
 
-ffmpegProcess.stdio[3].on('data', () => {
-  console.log('convertendo...')
-});
+// app.post('/download', (req, res) => {
+//   const randomID = Math.random() * 100000000000000000
+//   const ref = req.body.url;
+//   console.log("qualidade:" + `${req.body.qualidade}`)
+//   const titulo = req.body.titulo
 
-audio.pipe(ffmpegProcess.stdio[4]);
-video.pipe(ffmpegProcess.stdio[5]);
-ffmpegProcess.stdio[6].on('end', () => {
-    res.setHeader('Content-disposition', `attachment; filename="ydownload.com.br_${encodeURI(titulo)}.mp4"`);
-    res.setHeader('Content-type', 'video/mp4');
-    const finalFile = fs.createReadStream(`${randomID}.mp4`)
-    finalFile.pipe(res)
-    res.redirect('/')
-    finalFile.on('end', () => {
-      fs.unlink(`${randomID}.mp4`, function (err){
-        if (err) throw err;
-        console.log('Arquivo deletado!');
-      })
-    })
-  })
-});
+// // Get audio and video streams
+// const audio = ytdl(ref, { quality: 'highestaudio' });
+// const video = ytdl(ref, { quality: req.body.qualidade });
+
+// // Start the ffmpeg child process
+// const ffmpegProcess = cp.spawn(ffmpeg, [
+//   // Remove ffmpeg's console spamming
+//   '-loglevel', '8', '-hide_banner',
+//   // Redirect/Enable progress messages
+//   '-progress', 'pipe:3',
+//   // Set inputs
+//   '-i', 'pipe:4',
+//   '-i', 'pipe:5',
+//   // Map audio & video from streams
+//   '-map', '0:a',
+//   '-map', '1:v',
+//   // Keep encoding
+//   '-c:v', 'copy',
+//   // Define output file
+//   randomID + '.mp4',
+// ], {
+//   windowsHide: true,
+//   stdio: [
+//     /* Standard: stdin, stdout, stderr */
+//     'inherit', 'inherit', 'inherit',
+//     /* Custom: pipe:3, pipe:4, pipe:5 */
+//     'pipe', 'pipe', 'pipe', 'pipe', 'pipe'
+//   ],
+// });
+
+// ffmpegProcess.stdio[3].on('data', () => {
+//   console.log('convertendo...')
+// });
+
+// audio.pipe(ffmpegProcess.stdio[4]);
+// video.pipe(ffmpegProcess.stdio[5]);
+// ffmpegProcess.stdio[6].on('end', () => {
+//     res.setHeader('Content-disposition', `attachment; filename="ydownload.com.br_${encodeURI(titulo)}.mp4"`);
+//     res.setHeader('Content-type', 'video/mp4');
+//     const finalFile = fs.createReadStream(`${randomID}.mp4`)
+//     finalFile.pipe(res)
+//     res.redirect('/')
+//     finalFile.on('end', () => {
+//       fs.unlink(`${randomID}.mp4`, function (err){
+//         if (err) throw err;
+//         console.log('Arquivo deletado!');
+//       })
+//     })
+//   })
+// });
 
 
 app.listen(8087, () => {
