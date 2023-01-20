@@ -5,7 +5,6 @@ const ffmpeg = require('ffmpeg-static');
 const fs = require('fs')
 const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const { resolveSoa } = require('dns');
 const crypto = require('crypto');
 
 const app = express();
@@ -47,15 +46,22 @@ ytdl.getInfo(ref).then((info) => info).then(async info => {
 
 const inUseTokens = {};
 
-app.post('/download', (req, res) => {
-  // Capturar o token enviado pelo usuário
-  const token = req.headers.token;
+app.post('/token', (req, res) => {
+  // Gerar token aleatório
 
-  // // Verificar se o token é válido
-  // if (!inUseTokens[token]) {
-  //   res.status(401).send('Unauthorized');
-  //   return;
-  // }
+});
+
+app.post('/download', (req, res) => {
+  const token = crypto.randomBytes(20).toString('hex');
+
+  // Adicionar token ao objeto
+  inUseTokens[token] = true;
+
+  // Verificar se o token é válido
+  if (!inUseTokens[token]) {
+    res.status(401).send('Unauthorized');
+    return;
+  }
 
   // Obter URL do vídeo
   const url = req.body.url;
@@ -109,6 +115,7 @@ ffmpegProcess.stdio[6].on('close', (code) => {
       console.log(err);
     } else {
       // Remover token do objeto
+      console.log(inUseTokens)
       delete inUseTokens[token];
       // Apagar arquivo após o download
       fs.unlink(`${token}.mp4`, (err) => {
@@ -117,17 +124,6 @@ ffmpegProcess.stdio[6].on('close', (code) => {
       });
     }})
   })
-});
-
-app.post('/token', (req, res) => {
-  // Gerar token aleatório
-  const token = crypto.randomBytes(20).toString('hex');
-
-  // Adicionar token ao objeto
-  inUseTokens[token] = true;
-
-  // Retornar token para o usuário
-  res.json({ token });
 });
 
 app.post('/download', (req, res) => {
