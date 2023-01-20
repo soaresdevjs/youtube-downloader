@@ -62,12 +62,12 @@ app.post('/download', (req, res) => {
 
 
   // Iniciar a requisição
-  ytdl(ref, { filter: 'audioandvideo' })
-    .pipe(fs.createWriteStream(`${userIP}.mp4`))
+  ytdl(url, { quality: 'audioandvideo' })
+    .pipe(fs.createWriteStream(`${token}.mp4`))
     .on('finish', () => {
-      // Marcar o endereço IP como não em uso
-      delete inUseIPs[userIP];
-      res.download(`${userIP}.mp4`);
+      // Marcar o token como não em uso
+      delete inUseTokens[token];
+      res.download(`${token}.mp4`);
     });
 });
 
