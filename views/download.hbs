@@ -1,12 +1,46 @@
-<h1>{{title}}</h1>
-<form action="/download" method="post">
-<input type="hidden" name="url" value="{{url}}">
-<input type="hidden" name="titulo" value="{{title}}">
-<select name="qualidade" id="qualidade">
-{{#each qualidades.numbers}}
-    <option value="{{0}}{{1}}{{2}}">{{0}}{{1}}{{2}}</option>
-{{/each}}
-</select>
-<button type="submit">Download</button>
-</form>
-<script></script>
+<main class="download-container">
+    <h1>Baixe vídeos do YouTube online!</h1>
+    <div class="download-content">
+        <form action="download" method="post">
+        <input type="hidden" name="url" value="{{url}}">
+        <input type="hidden" name="titulo" value="{{title}}">
+        <div class="download-info">
+            <img class="thumbnail" src="{{thumbnail}}" alt="{{title}}">
+            <h4>{{title}}</h4>
+            <p id="seconds"></p>
+        </div>
+        <div class="download-inputs">
+            <div style="display: flex;flex-direction: column;">
+                <label for="qualidade">Selecione o Formato:</label>
+                <select name="qualidade" id="qualidade">
+                    <optgroup label="MP4">
+                        {{#each mp4}}
+                            <option name="mp4" value="{{itag}}">{{qualityLabel}}</option>
+                        {{/each}}
+                    </optgroup>
+                {{#if webm}}
+                    <optgroup label="Webm">
+                        {{#each webm}}
+                            <option name="webm" value="{{itag}}">{{qualityLabel}}</option>
+                        {{/each}}
+                    </optgroup>
+                {{/if}}
+                </select>
+            </div>
+            <button type="submit">Converter</button>
+        </div>
+        </form>
+    </div>
+</main>
+<script type="text/javascript">
+    const segundos = {{seconds}}
+
+    const formatarHorario = () => {
+        const minutos = segundos / 60
+        const s = segundos % 60
+        return `${parseInt(minutos)}:${s}`
+    }
+
+    document.querySelector('#seconds').innerHTML = `Duração: ${formatarHorario()}`
+ 
+</script>

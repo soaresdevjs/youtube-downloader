@@ -1,11 +1,12 @@
-<h1>TESTE</h1>
-<form action="/getlink" method="post">
-<label for="url">{{title}}</label>
-<input type="text" name="url" id="url">
-<select name="qualidade" id="qualidade">
-    {{#each qualidades}}
-        <option value="{{qualidades}}">itag: {{qualidades}}</option>
-    {{/each}}
-</select>
-<button type="submit">Converter video</button>
-</form>
+<div class="main-content">
+    <h1>Baixe vídeos do YouTube online!</h1>
+    <form action="/getlink" method="post">
+    <div class="search-button">
+        <input type="url" placeholder="URL do Vídeo" name="url" id="url" required>
+        <button type="submit">Pesquisar</button>
+    </div>
+    </form>
+    {{#if message}}
+        <h3 style="color: red; margin-top: 15px;">{{message}}</h3>
+    {{/if}}
+</div>

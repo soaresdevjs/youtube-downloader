@@ -6,6 +6,7 @@
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^5.1.0",
     "fs": "^0.0.1-security",
+    "phantomjs-prebuilt": "^2.1.16",
     "ytdl-core": "^4.11.2"
   }
 }
