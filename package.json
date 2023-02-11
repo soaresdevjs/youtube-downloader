@@ -6,6 +6,9 @@
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^5.1.0",
     "fs": "^0.0.1-security",
+    "fs-readdir-rec-gen": "^1.1.5",
+    "jquery": "^3.6.3",
+    "moment": "^2.29.4",
     "phantomjs-prebuilt": "^2.1.16",
     "ytdl-core": "^4.11.2"
   }

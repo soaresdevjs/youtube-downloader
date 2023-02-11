@@ -1,8 +1,8 @@
 <main class="download-container">
     <h1>Baixe vídeos do YouTube online!</h1>
     <div class="download-content">
-        <form action="download" method="post">
-        <input type="hidden" name="url" value="{{url}}">
+        <form action="baixar" method="post">
+        <input type="hidden" name="formato" value="{{formato}}">
         <input type="hidden" name="titulo" value="{{title}}">
         <input type="hidden" name="token" value="{{token}}">
         <input type="hidden" name="thumbnail" value="{{thumbnail}}">
@@ -13,24 +13,8 @@
             <p id="seconds"></p>
         </div>
         <div class="download-inputs">
-            <div style="display: flex;flex-direction: column;">
-                <label for="qualidade">Selecione o Formato:</label>
-                <select name="qualidade" id="qualidade">
-                    <optgroup label="MP4">
-                        {{#each mp4}}
-                            <option name="mp4" value="{{itag}}">{{qualityLabel}}</option>
-                        {{/each}}
-                    </optgroup>
-                {{#if webm}}
-                    <optgroup label="Webm">
-                        {{#each webm}}
-                            <option name="webm" value="{{itag}}">{{qualityLabel}}</option>
-                        {{/each}}
-                    </optgroup>
-                {{/if}}
-                </select>
-            </div>
-            <button onclick='convertendo()' type="submit">Converter</button>
+            <button onclick='baixado()' type="submit">Baixar</button>
+            <a href="/"><button type="button">Converter Outro</button></a>
         </div>
         </form>
     </div>
@@ -46,14 +30,12 @@
 
     document.querySelector('#seconds').innerHTML = `Duração: ${formatarHorario()}`
 
-    const vezesClicado = 0
-    const convertendo = () => {
+    const baixado = () => {
         const button = document.querySelector("button");
-        button.innerHTML = "Convertendo...";
+        button.innerHTML = "Baixando...";
         button.style.backgroundColor = "#8d8d8d"
         setTimeout(() => {
             button.disabled = true
         }, 500)
     }
-
 </script>

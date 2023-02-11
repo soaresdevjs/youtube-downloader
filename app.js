@@ -1,6 +1,7 @@
-const express = require('express');
-const hbs = require('express-handlebars');
-const bodyParser = require('body-parser');
+const express = require('express'),
+  hbs = require('express-handlebars'),
+  bodyParser = require('body-parser'),
+  $ = require('jquery');
 
 const app = express();
 
