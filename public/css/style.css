@@ -9,6 +9,7 @@
 html, body{
     height: 100vh;
     font-family: "Roboto", 'Times New Roman', Times, serif;
+    overflow: initial !important;
 }
 
 header{
@@ -224,6 +225,7 @@ h1{
     border: none;
     font-size: 14pt;
     font-weight: bold;
+    margin: 10px 0;
 }
 
 .downloated-inputs button:hover, .download-inputs button:hover{
@@ -239,7 +241,6 @@ h1{
 .stars-form {
     display: flex;
     height: 100%;
-    position: relative;
     grid-area: 2 / 2 / 3 / 3;
     justify-content: center;
     flex-direction: column;
@@ -247,6 +248,7 @@ h1{
 
 .stars-form div{
     display: flex;
+    position: relative;
 }
 
 .stars-form form{
@@ -276,25 +278,25 @@ h1{
 
 .c1::before, .c2::before, .c3::before, .c4::before, .c5::before{
     position: absolute;
-    top: 67px;
-    left: 35px;
+    top: -2px;
+    left: 2px;
     z-index: 0;
 }
 
 .c2::before{
-    left: 55px;
+    left: 21px;
 }
 
 .c3::before{
-    left: 74px;
+    left: 40px;
 }
 
 .c4::before{
-    left: 93px;
+    left: 59px;
 }
 
 .c5::before{
-    left: 112px;
+    left: 78px;
 }
 
 .checked{
@@ -333,6 +335,10 @@ h1{
         height: 425px;
     }
 
+    .downloated-content{
+        height: 500px;
+    }
+
     .download-content form{
         flex-direction: column;
     }
@@ -354,6 +360,10 @@ h1{
     .download-inputs{
         justify-content: space-evenly;
         width: 80%;
+    }
+
+    .downloated-inputs{
+        height: 100%;
     }
 
     .downloated-content{
