@@ -5,10 +5,9 @@ const express = require("express"),
   ffmpeg = require('ffmpeg-static'),
   fs = require('fs'),
   crypto = require('crypto'),
-  moment = require('moment'),
-  fsReadDirRecGen = require('fs-readdir-rec-gen');
+  fsReadDirRecGen = require('fs-readdir-rec-gen'),
+  mongoose = require('mongoose');
 
-module.exports = (router) => {
 //Tokens
   const inUseTokens = {};
 
@@ -30,6 +29,12 @@ module.exports = (router) => {
       fs.unlinkSync(file);
     }
   }
+
+//Mongoose
+  require('../models/Estrelas')
+  const Estrelas = mongoose.model("estrelas");
+
+module.exports = (router) => {
 
 router.get('/', (req, res) =>{
   if (req.query.urlfail){
@@ -173,23 +178,36 @@ router.post('/baixar', (req, res) =>{
     
   res.download(`${token}${formato}`, `download.com.br_${titulo}${formato}`, (err) => {
     if (err) {
-      console.log("Erro: " + err);
+        console.log("Erro: " + err);
       // Remover token do objeto
-      delete inUseTokens[token];
+        delete inUseTokens[token];
       // Apagar arquivo baixado
-      fs.unlink(`${token}${formato}`, (err) => {
-        if (err) console.log(err);
-        console.log('arquivo deletado');
-      });
+        fs.unlink(`${token}${formato}`, (err) => {
+          if (err) console.log(err);
+          console.log('arquivo deletado');
+        });
     } else {
       // Remover token do objeto
-      delete inUseTokens[token];
+        delete inUseTokens[token];
       // Apagar arquivo baixado
-      fs.unlink(`${token}${formato}`, (err) => {
-        if (err) console.log(err);
-        console.log('arquivo deletado');
-      });
-    }
+        fs.unlink(`${token}${formato}`, (err) => {
+          if (err) console.log(err);
+          console.log('arquivo deletado');
+        });
+      }
+    })
+  })
+
+  router.post('/estrelas', (req, res, next) =>{
+    const newPost = {
+      estrelas: req.body.estrelas,
+  }
+  new Estrelas(newPost).save().then((result) => {
+      console.log("Avaliado! " + result.estrelas);
+      res.status(204).send()
+  }).catch((err) =>{
+      console.log("Erro ao avaliar: " + err)
+      res.status(204).send()
   })
   })
 }

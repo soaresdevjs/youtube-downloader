@@ -1,7 +1,7 @@
 const express = require('express'),
   hbs = require('express-handlebars'),
   bodyParser = require('body-parser'),
-  $ = require('jquery');
+  mongoose = require('mongoose');
 
 const app = express();
 
@@ -17,6 +17,17 @@ const app = express();
     app.set('view engine','hbs');
   //Conteúdo estatico(CSS, JS, Imagens)
     app.use(express.static('public'));
+  //Mongoose
+    mongoose.Promise = global.Promise;
+    mongoose.set('strictQuery', false);
+    mongoose.connect("mongodb://localhost:27017/download",
+        {   useNewUrlParser:true,
+            useUnifiedTopology: true
+        }).then(()=>{
+        console.log("Conectado ao banco de dados!");
+    }).catch((err)=>{
+        console.log("Erro ao contectar ao banco de dados. Erro: " + err);
+    });
 
 //Rotas
   require("./routes")(app);
