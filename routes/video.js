@@ -11,8 +11,6 @@ const express = require("express"),
 //Tokens
   const inUseTokens = {};
 
-    console.log(inUseTokens)
-
   function filtrarPorExtensao(fileName) {
     return fileName.endsWith('.mp4');
   };
@@ -50,7 +48,6 @@ router.post('/getlink', (req, res) => {
   const ref = req.body.url;
   if(ytdl.validateURL(ref) == true){
     ytdl.getInfo(ref).then((info) => info).then(async info => {
-      console.log(ref)
       let title = info.videoDetails.title,
         thumbnail = info.player_response.videoDetails.thumbnail.thumbnails[3].url,
         seconds = info.player_response.videoDetails.lengthSeconds,

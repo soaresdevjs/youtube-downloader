@@ -1,0 +1,80 @@
+<section>
+    <div class="faq-container">
+        <h1>Download.com.br FAQ</h1>
+        <div class="faq-content">
+            <div class="dropdown-content">
+                <div class="dropdown-header">
+                    <h4>Como posso baixar vídeos do Youtube no Download.com.br?</h4>
+                    <img src="/images/down-arrow.png">
+                </div>
+                <div class="dropdown-message">
+                    <p>Para baixar vídeos do Youtube no Download.com.br, basta inserir o link do vídeo desejado na barra de pesquisa do site e clicar em "Download". Em seguida, você pode escolher o formato de vídeo desejado e clicar em "Baixar" para iniciar o download.</p>
+                </div>
+            </div>
+            <div class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>Quais formatos de vídeo posso baixar no Download.com.br?</h4>
+                    <a><img src="/images/down-arrow.png"></a>
+                </div>
+                <div  class="dropdown-message">
+                    <p>No Download.com.br, você pode baixar vídeos do Youtube em alguns formatos, incluindo MP4, Webm e até mesmo converter o vídeo para mp3.</p>
+                </div>
+            </div>
+            <div class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>O Download.com.br é gratuito?</h4>
+                    <a><img src="/images/down-arrow.png"></a>
+                </div>
+                <div  class="dropdown-message">
+                    <p>Sim, o Download.com.br é totalmente gratuito e não requer registro ou instalação de softwares adicionais.</p>
+                </div>
+            </div>
+            <div  class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>O Download.com.br é seguro?</h4>
+                    <img src="/images/down-arrow.png">
+                </div>
+                <div  class="dropdown-message">
+                    <p>Sim, o Download.com.br é seguro e não requer informações pessoais para baixar vídeos do Youtube. Além disso, o site utiliza criptografia SSL para garantir a segurança dos usuários. </p>
+                </div>
+            </div>
+            <div class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>Como posso escolher a qualidade do vídeo baixado no Download.com.br?</h4>
+                    <a><img src="/images/down-arrow.png"></a>
+                </div>
+                <div class="dropdown-message">
+                    <p>No Download.com.br, você pode escolher a qualidade do vídeo baixado antes de iniciar o download, basta selecionar a opção desejada na tela de download.</p>
+                </div>
+            </div>
+            <div class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>O que devo fazer se o download falhar no Download.com.br?</h4>
+                    <a><img src="/images/down-arrow.png"></a>
+                </div>
+                <div class="dropdown-message">
+                    <p>Se o download falhar no Download.com.br, você pode tentar novamente em alguns minutos ou entrar em contato com o suporte ao cliente para obter ajuda.</p>
+                </div>
+            </div>
+            <div class="dropdown-content">
+                <div  class="dropdown-header">
+                    <h4>Existe algum limite para baixar vídeos no Download.com.br?</h4>
+                    <a><img src="/images/down-arrow.png"></a>
+                </div>
+                <div class="dropdown-message">
+                    <p>Não existe nenhum limite para baixar vídeos no Download.com.br, você pode baixar quantos vídeos desejar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.dropdown-content').click(function() {
+    console.log(this)
+    $(this).find('.dropdown-message').slideToggle()
+    $(this).find('img').toggleClass("rotated")
+  });
+});
+</script>

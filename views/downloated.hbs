@@ -21,11 +21,11 @@
             <form action="estrelas" method="post">
                 <label for="estrelas">Avalie sua Experiencia:</label>
                     <div>
-                        <input type="radio" id="rate-1" name="estrelas" class="estrela-estrelas" value="1" required><span class="fa fa-star c1 s"></span>
-                        <input type="radio" id="rate-2" name="estrelas" class="estrela-estrelas" value="2" required><span class="fa fa-star c2 s"></span>
-                        <input type="radio" id="rate-3" name="estrelas" class="estrela-estrelas" value="3" required><span class="fa fa-star c3 s"></span>
-                        <input type="radio" id="rate-4" name="estrelas" class="estrela-estrelas" value="4" required><span class="fa fa-star c4 s"></span>
-                        <input type="radio" id="rate-5" name="estrelas" class="estrela-estrelas" value="5" required><span class="fa fa-star c5 s"></span>
+                        <input type="radio" id="rate-1" name="estrelas" class="estrela-estrelas" value="1" required><span class="fa fa-star c1"></span>
+                        <input type="radio" id="rate-2" name="estrelas" class="estrela-estrelas" value="2" required><span class="fa fa-star c2"></span>
+                        <input type="radio" id="rate-3" name="estrelas" class="estrela-estrelas" value="3" required><span class="fa fa-star c3"></span>
+                        <input type="radio" id="rate-4" name="estrelas" class="estrela-estrelas" value="4" required><span class="fa fa-star c4"></span>
+                        <input type="radio" id="rate-5" name="estrelas" class="estrela-estrelas" value="5" required><span class="fa fa-star c5"></span>
                     </div>
                 <button id="enviar" onclick='enviado()' type="submit">Enviar</button>
             </form>
@@ -53,32 +53,39 @@
         }, 500)
     }
 
-        const enviado = () => {
-        const button = document.querySelector("#enviar");
-        button.innerHTML = "Enviado!";
-        button.style.backgroundColor = "#8d8d8d"
-        setTimeout(() => {
-            $("#enviar").prop("disabled", true)
-            $("#rate-1").prop("disabled", true)
-            $("#rate-2").prop("disabled", true)
-            $("#rate-3").prop("disabled", true)
-            $("#rate-4").prop("disabled", true)
-            $("#rate-5").prop("disabled", true)
-        }, 500)
-    }
-
     $("#rate-1").on("click", () =>{
-        $('.c1.s').addClass('checked')
-        $('.c2.s, .c3.s, .c4.s, .c5.s').removeClass('checked')})
+        $('.c1').addClass('checked')
+        $('.c2, .c3, .c4, .c5').removeClass('checked')})
     $("#rate-2").on( "click", () =>{
-        $('.c1.s, .c2.s').addClass('checked')
-        $('.c3.s, .c4.s, .c5.s').removeClass('checked')})
+        $('.c1, .c2').addClass('checked')
+        $('.c3, .c4, .c5').removeClass('checked')})
     $("#rate-3").on("click", () =>{
-        $('.c1.s, .c2.s, .c3.s').addClass('checked')
-        $('.c4.s, .c5.s').removeClass('checked')})
+        $('.c1, .c2, .c3').addClass('checked')
+        $('.c4, .c5').removeClass('checked')})
     $("#rate-4").on("click", () =>{
-        $('.c1.s, .c2.s, .c3.s, .c4.s').addClass('checked')
-        $('.c5.s').removeClass('checked')})
+        $('.c1, .c2, .c3, .c4').addClass('checked')
+        $('.c5').removeClass('checked')})
     $("#rate-5").on("click", () =>{
-        $('.c1.s, .c2.s, .c3.s, .c4.s, .c5.s').addClass('checked')});
+        $('.c1, .c2, .c3, .c4, .c5').addClass('checked')});
+
+    const enviado = () => {
+    $("input[name='estrelas']").click(function() {
+        if ($(this).prop('checked')) {
+            $('#enviar').click(() => {
+                const button = document.querySelector("#enviar");
+                button.innerHTML = "Enviado!";
+                button.style.backgroundColor = "#8d8d8d"
+                setTimeout(() => {
+                    $("#enviar").prop("disabled", true)
+                    $("#rate-1").prop("disabled", true)
+                    $("#rate-2").prop("disabled", true)
+                    $("#rate-3").prop("disabled", true)
+                    $("#rate-4").prop("disabled", true)
+                    $("#rate-5").prop("disabled", true)
+                }, 500)
+            })
+            }
+        })
+    };
+
 </script>
