@@ -1,6 +1,6 @@
 <div class="main-content">
-    <h1>Baixe vídeos do YouTube online!</h1>
-    <form action="getlink" method="post">
+    <h1>Baixe vídeos do YouTube online{{#if route}} em MP3{{/if}}!</h1>
+    <form action="{{route}}/getlink" method="post">
     <div class="search-button">
         <input type="url" placeholder="URL do Vídeo" name="url" id="url" required>
         <button type="submit"><p>Pesquisar</p><img src="/images/procurar.png" alt=""></button>

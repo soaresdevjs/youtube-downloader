@@ -1,5 +1,5 @@
 <main class="download-container">
-    <h1>Baixe vídeos do YouTube online!</h1>
+    <h1>Baixe vídeos do YouTube online{{#if route}} em MP3{{/if}}!</h1>
     <div class="download-content">
         <form action="download" method="post">
         <input type="hidden" name="url" value="{{url}}">
@@ -16,15 +16,24 @@
             <div style="display: flex;flex-direction: column;">
                 <label for="qualidade">Selecione o Formato:</label>
                 <select name="qualidade" id="qualidade">
+                {{#if mp4}}
                     <optgroup label="MP4">
                         {{#each mp4}}
                             <option name="mp4" value="{{itag}}">{{qualityLabel}}</option>
                         {{/each}}
                     </optgroup>
+                {{/if}}
                 {{#if webm}}
                     <optgroup label="Webm">
                         {{#each webm}}
                             <option name="webm" value="{{itag}}">{{qualityLabel}}</option>
+                        {{/each}}
+                    </optgroup>
+                {{/if}}
+                {{#if mp3}}
+                    <optgroup label="MP3">
+                        {{#each mp3}}
+                            <option name="mp3" value="{{itag}}">{{audioBitrate}}kbps</option>
                         {{/each}}
                     </optgroup>
                 {{/if}}

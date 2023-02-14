@@ -27,6 +27,19 @@ header #logo{
     width: 100px;
 }
 
+header div{
+    display: flex;
+    align-items: center;
+}
+
+header div a{
+    margin: 0 5px;
+}
+
+header div a:nth-child(1){
+    color: #000;
+}
+
 h1{
     text-align: center;
 }

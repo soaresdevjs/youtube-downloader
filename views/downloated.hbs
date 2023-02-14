@@ -1,5 +1,5 @@
 <main class="download-container">
-    <h1>Baixe vídeos do YouTube online!</h1>
+    <h1>Baixe vídeos do YouTube online{{#if route}} em MP3{{/if}}!</h1>
     <div class="downloated-content">
         <div class="downloated-info">
             <img class="thumbnail" src="{{thumbnail}}" alt="{{title}}">
@@ -18,7 +18,7 @@
             </div>
         </form>
         <div class="stars-form">
-            <form action="estrelas" method="post">
+            <form action="/estrelas" method="post">
                 <label for="estrelas">Avalie sua Experiencia:</label>
                     <div>
                         <input type="radio" id="rate-1" name="estrelas" class="estrela-estrelas" value="1" required><span class="fa fa-star c1"></span>
@@ -27,7 +27,7 @@
                         <input type="radio" id="rate-4" name="estrelas" class="estrela-estrelas" value="4" required><span class="fa fa-star c4"></span>
                         <input type="radio" id="rate-5" name="estrelas" class="estrela-estrelas" value="5" required><span class="fa fa-star c5"></span>
                     </div>
-                <button id="enviar" onclick='enviado()' type="submit">Enviar</button>
+                <button id="enviar" type="submit">Enviar</button>
             </form>
         </div>
     </div>
@@ -53,6 +53,58 @@
         }, 500)
     }
 
+    function cookieExists(name) {
+        const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(`${name}=`)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function cookieValue() {
+        var cookieString = document.cookie,
+        cookies = cookieString.split(';');
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+                if (cookie.indexOf('avaliado=') === 0) {
+                var valor = cookie.substring('avaliado='.length, cookie.length);
+                return valor
+            break;
+            }
+        }
+    }
+
+    console.log(cookieValue())
+
+    switch (cookieValue()) {
+        case '1': 
+        $('.c1').addClass('checked')
+        $('.c2, .c3, .c4, .c5').removeClass('checked');
+        break;
+        case '2': 
+        $('.c1, .c2').addClass('checked')
+        $('.c3, .c4, .c5').removeClass('checked')
+        break;
+        case '3':
+        $('.c1, .c2, .c3').addClass('checked')
+        $('.c4, .c5').removeClass('checked')
+        break;
+        case '4':
+        $('.c1, .c2, .c3, .c4').addClass('checked')
+        $('.c5').removeClass('checked')
+        break;
+        case '5':
+        $('.c1, .c2, .c3, .c4, .c5').addClass('checked')
+        break;
+        default:
+        break;
+
+    }
+
     $("#rate-1").on("click", () =>{
         $('.c1').addClass('checked')
         $('.c2, .c3, .c4, .c5').removeClass('checked')})
@@ -68,24 +120,27 @@
     $("#rate-5").on("click", () =>{
         $('.c1, .c2, .c3, .c4, .c5').addClass('checked')});
 
-    const enviado = () => {
-    $("input[name='estrelas']").click(function() {
-        if ($(this).prop('checked')) {
+    if (cookieExists('avaliado')) {
+        const button = document.querySelector('#enviar');
+            button.innerHTML = "Enviado!";
+            button.style.backgroundColor = "#8d8d8d"
+            setTimeout(() => {
+                $("#enviar").prop("disabled", true)
+                $(".estrela-estrelas").prop("disabled", true)
+            }, 500)
+        } else {
+        $("input[name='estrelas']").click(() => {
+            console.log()
             $('#enviar').click(() => {
-                const button = document.querySelector("#enviar");
-                button.innerHTML = "Enviado!";
-                button.style.backgroundColor = "#8d8d8d"
-                setTimeout(() => {
-                    $("#enviar").prop("disabled", true)
-                    $("#rate-1").prop("disabled", true)
-                    $("#rate-2").prop("disabled", true)
-                    $("#rate-3").prop("disabled", true)
-                    $("#rate-4").prop("disabled", true)
-                    $("#rate-5").prop("disabled", true)
-                }, 500)
-            })
-            }
+            document.cookie = 'avaliado='+ $("input[name='estrelas']:checked").val() +'; expires=' + new Date(2147483647 * 1000).toUTCString();
+            const button = document.querySelector('#enviar');
+            button.innerHTML = "Enviado!";
+            button.style.backgroundColor = "#8d8d8d"
+            setTimeout(() => {
+                $("#enviar").prop("disabled", true)
+                $(".estrela-estrelas").prop("disabled", true)
+            }, 500)
         })
-    };
-
+    })
+        }
 </script>

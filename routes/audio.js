@@ -17,17 +17,17 @@ const express = require("express"),
 
 module.exports = (router) => {
 
-router.get('/', (req, res) =>{
+router.get('/audio', (req, res) =>{
   if (req.query.urlfail){
-    res.render('index', {message: "URL Inválida, verifique sua URL e tente novamente!", format: "MP3", rota: "audio"});
+    res.render('index', {message: "URL Inválida, verifique sua URL e tente novamente!", route: "audio", format: "MP4 e WEBM", rota: ""});
   }else if(req.query.private){
-    res.render('index', {message: "Esse vídeo é privado ou não foi encontrado.", format: "MP3", rota: "audio"});
+    res.render('index', {message: "Esse vídeo é privado ou não foi encontrado.", route: "audio", format: "MP4 e WEBM", rota: ""});
   }else{
-    res.render('index', {format: "MP3", rota: "audio"});
+    res.render('index', {route: "audio", format: "MP4 e WEBM", rota: ""});
   }
-  
+
   function filtrarPorExtensao(fileName) {
-    return fileName.endsWith('.mp4') || fileName.endsWith('.webm');
+    return fileName.endsWith('.mp3');
   };
   
   const tempoDeDownload = (d => {
@@ -44,7 +44,7 @@ router.get('/', (req, res) =>{
   }
 })
 
-router.post('/getlink', (req, res) => {
+router.post('/audio/getlink', (req, res) => {
   const ref = req.body.url;
   if(ytdl.validateURL(ref) == true){
     ytdl.getInfo(ref).then((info) => info).then(async info => {
@@ -53,42 +53,29 @@ router.post('/getlink', (req, res) => {
         seconds = info.player_response.videoDetails.lengthSeconds,
         formatos = [],
         qualidades = {};
-      const itagMP4 = [137, 136, 135, 134],
-        itagWEBM = [248, 247];
+      const itagMP3 = [18, 140];
 
       for(i = 0; i < info.formats.length; i++){
         formatos.push(info.formats[i])
         qualidades = Object.assign(formatos);
       }
 
-      const mp4Keys = Object.keys(qualidades),
-        mp4Todos = mp4Keys.map((keys) => qualidades[keys]),
-        mp4Filtrados = mp4Todos.filter((item) => itagMP4.includes(item.itag)),
-        Formatar18 = mp4Todos.filter((item) => item.itag === 18),
-        webmKeys = Object.keys(qualidades),
-        webmTodos = webmKeys.map((keys) => qualidades[keys]),
-        webmFiltrados = webmTodos.filter((item) => itagWEBM.includes(item.itag));
+      const mp3Keys = Object.keys(qualidades),
+        mp3Todos = mp3Keys.map((keys) => qualidades[keys]),
+        mp3Filtrados = mp3Todos.filter((item) => itagMP3.includes(item.itag));
+        console.log(mp3Filtrados)
 
-      Formatar18[0].qualityLabel = '144p';
-      mp4Filtrados.push(Formatar18[0]);
-
-      res.render('download', {thumbnail: thumbnail, title: title, seconds: seconds, mp4: mp4Filtrados, webm: webmFiltrados,url: ref, format: "MP3", rota: "audio"})
+      res.render('download', {thumbnail: thumbnail, title: title, seconds: seconds, mp3: mp3Filtrados,url: ref, format: "MP4 e WEBM", rota: "", route: "audio"})
     }).catch((err) => {
-      res.redirect('/?private=true');
+      res.redirect('/audio/?private=true');
       console.log("Erro: " + err)
     });
   }else{
-    res.redirect('/?urlfail=true');
+    res.redirect('/audio/?urlfail=true');
   }
 })
 
-router.post('/download', (req, res) => {
-    if (req.body.qualidade == 137 || req.body.qualidade == 136 || req.body.qualidade == 135 || req.body.qualidade == 134 || req.body.qualidade == 18){
-      var formato = ".mp4";
-    } else {
-      var formato = ".webm";
-    }
-
+router.post('/audio/download', (req, res) => {
     const token = crypto.randomBytes(20).toString('hex');
   
     // Adicionar token ao objeto
@@ -101,15 +88,15 @@ router.post('/download', (req, res) => {
     }
   
     // Obter URL do vídeo
-    
     const url = req.body.url,
       titulo = req.body.titulo,
       thumbnail = req.body.thumbnail,
-      seconds = req.body.seconds;
+      seconds = req.body.seconds,
+      formato = ".mp3";
    
     // Obter audio e video
-    const audio = ytdl(url, { quality: 'highestaudio' }),
-      video = ytdl(url, { quality: req.body.qualidade });
+    const audio = ytdl(url, { quality: req.body.qualidade }),
+      video = ytdl(url, {quality: req.body.qualidade, filter: 'audio'});
   
     // Start the ffmpeg child process
     const ffmpegProcess = cp.spawn(ffmpeg, [
@@ -122,7 +109,6 @@ router.post('/download', (req, res) => {
     '-i', 'pipe:5',
     // Map audio & video from streams
     '-map', '0:a',
-    '-map', '1:v',
     // Keep encoding
     '-c:v', 'copy',
     // Define output file
@@ -163,11 +149,11 @@ router.post('/download', (req, res) => {
   });
 
   ffmpegProcess.stdio[6].on('close', () => {
-    res.render('downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, format: "MP3", rota: "audio"})
+    res.render('downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, format: "MP4 e WEBM", rota: "", route: "audio"})
     });
   });
 
-router.post('/baixar', (req, res) =>{
+router.post('/audio/baixar', (req, res) =>{
   const formato = req.body.formato,
     token = req.body.token,
     titulo = req.body.titulo;
@@ -195,7 +181,7 @@ router.post('/baixar', (req, res) =>{
     })
   })
 
-  router.post('/estrelas', (req, res, next) =>{
+  router.post('/audio/estrelas', (req, res, next) =>{
     const newPost = {
       estrelas: req.body.estrelas,
   }
