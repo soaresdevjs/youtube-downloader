@@ -12,11 +12,18 @@ html, body{
     overflow: initial !important;
 }
 
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 header{
     display: flex;
     justify-content: space-between;
     padding: 15px;
     align-items: center;
+    border-bottom: 2px solid #E6E6E6;
 }
 
 header img{
@@ -43,6 +50,7 @@ header div a:nth-child(1){
 h1{
     text-align: center;
 }
+
 
 .main-content{
     display: flex;

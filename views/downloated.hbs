@@ -32,6 +32,7 @@
         </div>
     </div>
 </main>
+{{>info}}
 <script src="/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
     const segundos = {{seconds}}
@@ -102,7 +103,6 @@
         break;
         default:
         break;
-
     }
 
     $("#rate-1").on("click", () =>{
@@ -136,11 +136,11 @@
             const button = document.querySelector('#enviar');
             button.innerHTML = "Enviado!";
             button.style.backgroundColor = "#8d8d8d"
-            setTimeout(() => {
-                $("#enviar").prop("disabled", true)
-                $(".estrela-estrelas").prop("disabled", true)
-            }, 500)
+                setTimeout(() => {
+                    $("#enviar").prop("disabled", true)
+                    $(".estrela-estrelas").prop("disabled", true)
+                }, 500)
+            })
         })
-    })
-        }
+    }
 </script>
