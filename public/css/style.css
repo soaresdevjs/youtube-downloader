@@ -133,7 +133,7 @@ h1{
 }
 
 .info-content img{
-    width: 85px;
+    width: 64px;
     margin: 15px;
 }
 
@@ -475,10 +475,6 @@ footer{
     .info-content li{
         width: 100%;
         margin: 10px 0;
-    }
-
-    .info-content img {
-        width: 60px;
     }
 
     .info-content li p {
