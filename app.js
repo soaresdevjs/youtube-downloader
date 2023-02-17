@@ -20,7 +20,7 @@ const app = express();
   //Mongoose
     mongoose.Promise = global.Promise;
     mongoose.set('strictQuery', false);
-    mongoose.connect("mongodb://localhost:27017/download",
+    mongoose.connect("mongodb+srv://admin:123@eusigno.lvwkevj.mongodb.net/?retryWrites=true&w=majority",
         {   useNewUrlParser:true,
             useUnifiedTopology: true
         }).then(()=>{
