@@ -21,9 +21,10 @@ body{
 header{
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 5px 10px;
     align-items: center;
-    border-bottom: 2px solid #E6E6E6;
+    border-bottom: 2px solid #E6E6E6; 
+    margin-bottom: 40px;
 }
 
 header img{
@@ -49,6 +50,8 @@ header div a:nth-child(1){
 
 h1{
     text-align: center;
+    font-size: 20pt;
+
 }
 
 
@@ -100,7 +103,6 @@ h1{
 }
 
 .info-container{
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -115,7 +117,7 @@ h1{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%;
+    width: 97vw;
 }
 
 .info-content li{
@@ -127,7 +129,7 @@ h1{
 
 .info-content li p{
     width: 300px;
-    font-size: 14pt;
+    font-size: 12pt;
 }
 
 .info-content img{
@@ -144,11 +146,12 @@ h1{
 .text{
     width: 80%;
     text-align: center;
+    font-size: 11pt;
 }
 
 .text h4{
     margin: 10px;
-    font-size: 14pt;
+    font-size: 13pt;
 }
 
 .download-content{
@@ -358,6 +361,10 @@ h1{
     margin: 10px;
 }
 
+.dropdown-message p{
+    font-size: 11pt;
+}
+
 .faq-content{
     display: flex;
     justify-content: center;
@@ -408,6 +415,7 @@ h1{
 .more-content ol{
     width: 90%;
     margin: auto;
+    font-size: 11pt;
 }
 
 footer{
@@ -427,6 +435,7 @@ footer{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-size: 10pt;
 }
 
 .footer-content ul li{
@@ -444,6 +453,7 @@ footer{
     text-align: center;
     color: #808080;
     font-size: 8pt;
+    margin: 0 10px;
 }
 
 @media screen and (max-width: 720px){
@@ -458,6 +468,10 @@ footer{
     }
 }
 @media screen and (max-width: 425px) {
+    header div a:nth-child(1) {
+        font-size: 10pt;
+    }
+
     .info-content li{
         width: 100%;
         margin: 10px 0;
@@ -468,7 +482,7 @@ footer{
     }
 
     .info-content li p {
-        font-size: 12pt;
+        font-size: 11pt;
     }
     
     .download-content{

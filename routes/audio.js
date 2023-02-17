@@ -95,8 +95,7 @@ router.post('/audio/download', (req, res) => {
       formato = ".mp3";
    
     // Obter audio e video
-    const audio = ytdl(url, { quality: req.body.qualidade }),
-      video = ytdl(url, {quality: req.body.qualidade, filter: 'audio'});
+    const audio = ytdl(url, { quality: req.body.qualidade });
   
     // Start the ffmpeg child process
     const ffmpegProcess = cp.spawn(ffmpeg, [
@@ -106,7 +105,6 @@ router.post('/audio/download', (req, res) => {
     '-progress', 'pipe:3',
     // Set inputs
     '-i', 'pipe:4',
-    '-i', 'pipe:5',
     // Map audio & video from streams
     '-map', '0:a',
     // Keep encoding
@@ -119,7 +117,7 @@ router.post('/audio/download', (req, res) => {
       /* Standard: stdin, stdout, stderr */
       'inherit', 'inherit', 'inherit',
       /* Custom: pipe:3, pipe:4, pipe:5 */
-      'pipe', 'pipe', 'pipe', 'pipe'
+      'pipe', 'pipe', 'pipe'
     ],
   });
 
@@ -133,22 +131,20 @@ router.post('/audio/download', (req, res) => {
       ffmpegProcess.stdio[3].end();
       ffmpegProcess.stdio[4].end();
       ffmpegProcess.stdio[5].end();
-      ffmpegProcess.stdio[6].end();
       console.log('Interrompendo o processo FFmpeg...');
       ffmpegProcess.kill("SIGTERM");
     }, 2000);
   });
 
   audio.pipe(ffmpegProcess.stdio[4]);
-  video.pipe(ffmpegProcess.stdio[5]);
   
-  ffmpegProcess.stdio[6].on('error', (err) => {
+  ffmpegProcess.stdio[5].on('error', (err) => {
     // Remover token do objeto
     delete inUseTokens[token];
     res.status(500).send(err.message);
   });
 
-  ffmpegProcess.stdio[6].on('close', () => {
+  ffmpegProcess.stdio[5].on('close', () => {
     res.render('downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, format: "MP4 e WEBM", rota: "", route: "audio"})
     });
   });
@@ -157,7 +153,6 @@ router.post('/audio/baixar', (req, res) =>{
   const formato = req.body.formato,
     token = req.body.token,
     titulo = req.body.titulo;
-    console.log(titulo)
     
   res.download(`${token}${formato}`, `download.com.br_${titulo}${formato}`, (err) => {
     if (err) {
@@ -167,7 +162,7 @@ router.post('/audio/baixar', (req, res) =>{
       // Apagar arquivo baixado
         fs.unlink(`${token}${formato}`, (err) => {
           if (err) console.log(err);
-          console.log('arquivo deletado');
+          console.log('Aquivo deletado!');
         });
     } else {
       // Remover token do objeto
@@ -175,13 +170,13 @@ router.post('/audio/baixar', (req, res) =>{
       // Apagar arquivo baixado
         fs.unlink(`${token}${formato}`, (err) => {
           if (err) console.log(err);
-          console.log('arquivo deletado');
+          console.log('Aquivo deletado!');
         });
       }
     })
   })
 
-  router.post('/audio/estrelas', (req, res, next) =>{
+  router.post('/audio/estrelas', (req, res) =>{
     const newPost = {
       estrelas: req.body.estrelas,
   }

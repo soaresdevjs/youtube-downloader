@@ -181,7 +181,7 @@ router.post('/baixar', (req, res) =>{
       // Apagar arquivo baixado
         fs.unlink(`${token}${formato}`, (err) => {
           if (err) console.log(err);
-          console.log('arquivo deletado');
+          console.log('Aquivo deletado!');
         });
     } else {
       // Remover token do objeto
@@ -189,13 +189,13 @@ router.post('/baixar', (req, res) =>{
       // Apagar arquivo baixado
         fs.unlink(`${token}${formato}`, (err) => {
           if (err) console.log(err);
-          console.log('arquivo deletado');
+          console.log('Aquivo deletado!');
         });
       }
     })
   })
 
-  router.post('/estrelas', (req, res, next) =>{
+  router.post('/estrelas', (req, res) =>{
     const newPost = {
       estrelas: req.body.estrelas,
   }
