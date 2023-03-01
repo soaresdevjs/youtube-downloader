@@ -1,0 +1,161 @@
+/* <section class="informacoes"> */
+section.informacoes {
+  display: flex;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(18, 20, 22, 0.5);
+  min-height: 50vh;
+  width: 70%;
+  z-index: 3;
+}
+section.informacoes .duvidas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 60px;
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  width: 50%;
+}
+section.informacoes .duvidas h2 {
+  font-family: var(--bold);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: var(--cor-branco);
+}
+section.informacoes .duvidas .duvida {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px 0 0 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+section.informacoes .duvidas .duvida * {
+  pointer-events: none;
+}
+section.informacoes .duvidas .duvida:hover {
+  opacity: 0.7;
+}
+section.informacoes .duvidas .duvida .pergunta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+section.informacoes .duvidas .duvida .pergunta h3 {
+  font-family: var(--bold);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: var(--cor-branco);
+  line-height: 1.5;
+}
+section.informacoes .duvidas .duvida.mostrar .pergunta .icone {
+  transform: rotate(-90deg);
+}
+section.informacoes .duvidas .duvida .pergunta .icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 43, 0.2);
+  margin: 0 10px 0 0;
+  transition: all 0.3s;
+}
+section.informacoes.audio .duvidas .duvida .pergunta .icone {
+  background-color: rgb(40, 152, 224, 0.2);
+}
+section.informacoes .duvidas .duvida .pergunta .icone img {
+  width: 100%;
+  max-width: 10px;
+}
+section.informacoes .duvidas .duvida p {
+  font-family: var(--regular);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  padding: 0 0 0 30px;
+  transition: all 0.3s;
+}
+section.informacoes .duvidas .duvida.mostrar p {
+  line-height: 1.5;
+  opacity: 1;
+  visibility: visible;
+}
+/* Benefícios */
+section.informacoes .beneficios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px;
+  width: 50%;
+}
+section.informacoes .beneficios .item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+section.informacoes .beneficios .item.diferente {
+  margin: 20px 0;
+}
+section.informacoes .beneficios .item.diferente .texto {
+  align-items: flex-end;
+  text-align: right;
+  width: 100%;
+  margin: 0 15px 0 0;
+}
+section.informacoes .beneficios .item .icone {
+  padding: 20px 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+section.informacoes .beneficios .item:hover .icone {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+section.informacoes .beneficios .item .icone img {
+  width: 100%;
+  max-width: 35px;
+}
+section.informacoes .beneficios .item .texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0 0 15px;
+}
+section.informacoes .beneficios .item .texto h3 {
+  font-family: var(--bold);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: var(--cor-branco);
+  line-height: 1.5;
+}
+section.informacoes .beneficios .item .texto p {
+  font-family: var(--regular);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  width: 100%;
+  max-width: 350px;
+}
+/* Responsivo */
+@media screen and (max-width: 1000px) {
+  section.informacoes {
+    flex-direction: column;
+    min-height: auto;
+    width: 100%;
+    z-index: 3;
+  }
+  section.informacoes .duvidas {
+    padding: 50px 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    border-right: none;
+    width: 100%;
+  }
+  /* Benefícios */
+  section.informacoes .beneficios {
+    padding: 50px 20px;
+    width: 100%;
+  }
+}

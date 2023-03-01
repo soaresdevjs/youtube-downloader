@@ -1,0 +1,20 @@
+/* Personaliza a cor do scroll da página */
+html {
+  scrollbar-color: rgba(255, 255, 255, 0.3) var(--cor-secundaria);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--cor-secundaria);
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 6px;
+  height: 6px;
+  border-radius: 10px;
+}

@@ -5,89 +5,86 @@ const express = require("express"),
   ffmpeg = require('ffmpeg-static'),
   fs = require('fs'),
   crypto = require('crypto'),
-  fsReadDirRecGen = require('fs-readdir-rec-gen'),
-  mongoose = require('mongoose');
+  fsReadDirRecGen = require('fs-readdir-rec-gen');
 
 //Tokens
   const inUseTokens = {};
-
-//Mongoose
-  require('../models/Estrelas')
-  const Estrelas = mongoose.model("estrelas");
-
 module.exports = (router) => {
 
-router.get('/', (req, res) =>{
-  if (req.query.urlfail){
-    res.render('index', {message: "URL Inválida, verifique sua URL e tente novamente!", format: "MP3", rota: "audio"});
-  }else if(req.query.private){
-    res.render('index', {message: "Esse vídeo é privado ou não foi encontrado.", format: "MP3", rota: "audio"});
-  }else{
-    res.render('index', {format: "MP3", rota: "audio"});
-  }
-  
-  function filtrarPorExtensao(fileName) {
-    return fileName.endsWith('.mp4') || fileName.endsWith('.webm');
-  };
-  
-  const tempoDeDownload = (d => {
-    d.setMinutes(d.getMinutes() - 2);
-    return d;
-  })(new Date());
-    
-  for (let file of fsReadDirRecGen('.', filtrarPorExtensao)) {
-    const Stats = fs.statSync(file);
-    console.log(((Stats.mtime - tempoDeDownload) / 60000) % 60 )
-    if (Stats.mtime < tempoDeDownload) {
-      fs.unlinkSync(file);
+  router.get('/', (req, res) =>{
+    if (req.query.urlfail){
+      res.render('index', {message: "URL Inválida, verifique sua URL e tente novamente!", css: "./assets/css/pages/video/index/index.css?v=0.1"});
+    }else if(req.query.private){
+      res.render('index', {message: "Esse vídeo é privado ou não foi encontrado.", css: "./assets/css/pages/video/index/index.css?v=0.1"});
+    }else{
+      res.render('index', {css: "./assets/css/pages/video/index/index.css?v=0.1"});
     }
-  }
-})
-
-router.post('/getlink', (req, res) => {
-  const ref = req.body.url;
-  if(ytdl.validateURL(ref) == true){
-    ytdl.getInfo(ref).then((info) => info).then(async info => {
-      let title = info.videoDetails.title,
-        thumbnail = info.player_response.videoDetails.thumbnail.thumbnails[3].url,
-        seconds = info.player_response.videoDetails.lengthSeconds,
-        formatos = [],
-        qualidades = {};
-      const itagMP4 = [137, 136, 135, 134],
-        itagWEBM = [248, 247];
-
-      for(i = 0; i < info.formats.length; i++){
-        formatos.push(info.formats[i])
-        qualidades = Object.assign(formatos);
+    
+    function filtrarPorExtensao(fileName) {
+      return fileName.endsWith('.mp4') || fileName.endsWith('.webm');
+    };
+    
+    const tempoDeDownload = (d => {
+      d.setMinutes(d.getMinutes() - 2);
+      return d;
+    })(new Date());
+      
+    for (let file of fsReadDirRecGen('.', filtrarPorExtensao)) {
+      const Stats = fs.statSync(file);
+      console.log(((Stats.mtime - tempoDeDownload) / 60000) % 60 )
+      if (Stats.mtime < tempoDeDownload) {
+        fs.unlinkSync(file);
       }
+    }
+  })
 
-      const mp4Keys = Object.keys(qualidades),
-        mp4Todos = mp4Keys.map((keys) => qualidades[keys]),
-        mp4Filtrados = mp4Todos.filter((item) => itagMP4.includes(item.itag)),
-        Formatar18 = mp4Todos.filter((item) => item.itag === 18),
-        webmKeys = Object.keys(qualidades),
-        webmTodos = webmKeys.map((keys) => qualidades[keys]),
-        webmFiltrados = webmTodos.filter((item) => itagWEBM.includes(item.itag));
+  router.post('/formatar', (req, res) => {
+    const ref = req.body.url;
+    if(ytdl.validateURL(ref) == true){
+      ytdl.getInfo(ref).then((info) => info).then(async info => {
+        let title = info.videoDetails.title,
+          thumbnail = info.player_response.videoDetails.thumbnail.thumbnails[4] ? info.player_response.videoDetails.thumbnail.thumbnails[4].url : info.player_response.videoDetails.thumbnail.thumbnails[3].url,
+          seconds = info.player_response.videoDetails.lengthSeconds,
+          autor = info.player_response.videoDetails.author,
+          formatos = [],
+          qualidades = {};
+        const itagMP4 = [137, 136, 135, 134],
+          itagWEBM = [248, 247];
 
-      Formatar18[0].qualityLabel = '144p';
-      mp4Filtrados.push(Formatar18[0]);
+        for(i = 0; i < info.formats.length; i++){
+          formatos.push(info.formats[i])
+          qualidades = Object.assign(formatos);
+        }
 
-      res.render('download', {thumbnail: thumbnail, title: title, seconds: seconds, mp4: mp4Filtrados, webm: webmFiltrados,url: ref, format: "MP3", rota: "audio"})
-    }).catch((err) => {
-      res.redirect('/?private=true');
-      console.log("Erro: " + err)
-    });
-  }else{
-    res.redirect('/?urlfail=true');
-  }
-})
+        const mp4Keys = Object.keys(qualidades),
+          mp4Todos = mp4Keys.map((keys) => qualidades[keys]),
+          mp4Filtrados = mp4Todos.filter((item) => itagMP4.includes(item.itag)),
+          Formatar18 = mp4Todos.filter((item) => item.itag === 18),
+          webmKeys = Object.keys(qualidades),
+          webmTodos = webmKeys.map((keys) => qualidades[keys]),
+          webmFiltrados = webmTodos.filter((item) => itagWEBM.includes(item.itag));
 
-router.post('/download', (req, res) => {
+        Formatar18[0].qualityLabel = '144p';
+        mp4Filtrados.push(Formatar18[0]);
+
+        res.render('video-download', {thumbnail: thumbnail, title: title, seconds: seconds, autor: autor, mp4: mp4Filtrados, webm: webmFiltrados, url: ref, css: "/assets/css/pages/video/formato/formato.css?v=0.1"})
+      }).catch((err) => {
+        res.redirect('/?private=true');
+        console.log("Erro: " + err)
+      });}
+      else{
+      res.redirect('/?urlfail=true');
+    }
+  })
+
+  router.post('/download', (req, res) => {
     if (req.body.qualidade == 137 || req.body.qualidade == 136 || req.body.qualidade == 135 || req.body.qualidade == 134 || req.body.qualidade == 18){
       var formato = ".mp4";
     } else {
       var formato = ".webm";
     }
+
+    console.log(req.body.qualidade)
 
     const token = crypto.randomBytes(20).toString('hex');
   
@@ -101,7 +98,6 @@ router.post('/download', (req, res) => {
     }
   
     // Obter URL do vídeo
-    
     const url = req.body.url,
       titulo = req.body.titulo,
       thumbnail = req.body.thumbnail,
@@ -109,7 +105,7 @@ router.post('/download', (req, res) => {
    
     // Obter audio e video
     const audio = ytdl(url, { quality: 'highestaudio' }),
-      video = ytdl(url, { quality: req.body.qualidade });
+      video = ytdl(url, { quality: `${req.body.qualidade}` });
   
     // Start the ffmpeg child process
     const ffmpegProcess = cp.spawn(ffmpeg, [
@@ -150,7 +146,7 @@ router.post('/download', (req, res) => {
       ffmpegProcess.stdio[6].end();
       console.log('Interrompendo o processo FFmpeg...');
       ffmpegProcess.kill("SIGTERM");
-    }, 2000);
+    }, 500);
   });
 
   audio.pipe(ffmpegProcess.stdio[4]);
@@ -163,48 +159,35 @@ router.post('/download', (req, res) => {
   });
 
   ffmpegProcess.stdio[6].on('close', () => {
-    res.render('downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, format: "MP3", rota: "audio"})
+    res.render('video-downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, css: "../assets/css/pages/video/sucesso/sucesso.css?v=0.1"})
     });
   });
 
-router.post('/baixar', (req, res) =>{
-  const formato = req.body.formato,
-    token = req.body.token,
-    titulo = req.body.titulo;
-    console.log(titulo)
+  router.post('/baixar', (req, res) =>{
+    const formato = req.body.formato,
+      token = req.body.token,
+      titulo = req.body.titulo;
+      console.log(titulo)
     
-  res.download(`${token}${formato}`, `download.com.br_${titulo}${formato}`, (err) => {
-    if (err) {
-        console.log("Erro: " + err);
-      // Remover token do objeto
-        delete inUseTokens[token];
-      // Apagar arquivo baixado
-        fs.unlink(`${token}${formato}`, (err) => {
-          if (err) console.log(err);
-          console.log('Aquivo deletado!');
-        });
-    } else {
-      // Remover token do objeto
-        delete inUseTokens[token];
-      // Apagar arquivo baixado
-        fs.unlink(`${token}${formato}`, (err) => {
-          if (err) console.log(err);
-          console.log('Aquivo deletado!');
-        });
+    res.download(`${token}${formato}`, `dowwnload.com_${titulo}${formato}`, (err) => {
+      if (err) {
+          console.log("Erro: " + err);
+        // Remover token do objeto
+          delete inUseTokens[token];
+        // Apagar arquivo baixado
+          fs.unlink(`${token}${formato}`, (err) => {
+            if (err) console.log(err);
+            console.log('Aquivo deletado!');
+          });
+      } else {
+        // Remover token do objeto
+          delete inUseTokens[token];
+        // Apagar arquivo baixado
+          fs.unlink(`${token}${formato}`, (err) => {
+            if (err) console.log(err);
+            console.log('Aquivo deletado!');
+          });
       }
     })
-  })
-
-  router.post('/estrelas', (req, res) =>{
-    const newPost = {
-      estrelas: req.body.estrelas,
-  }
-  new Estrelas(newPost).save().then((result) => {
-      console.log("Avaliado! " + result.estrelas);
-      res.status(204).send()
-  }).catch((err) =>{
-      console.log("Erro ao avaliar: " + err)
-      res.status(204).send()
-  })
   })
 }

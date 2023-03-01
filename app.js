@@ -1,7 +1,6 @@
 const express = require('express'),
   hbs = require('express-handlebars'),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose');
+  bodyParser = require('body-parser');
 
 const app = express();
 
@@ -17,17 +16,6 @@ const app = express();
     app.set('view engine','hbs');
   //Conteúdo estatico(CSS, JS, Imagens)
     app.use(express.static('public'));
-  //Mongoose
-    mongoose.Promise = global.Promise;
-    mongoose.set('strictQuery', false);
-    mongoose.connect("mongodb+srv://admin:123@eusigno.lvwkevj.mongodb.net/?retryWrites=true&w=majority",
-        {   useNewUrlParser:true,
-            useUnifiedTopology: true
-        }).then(()=>{
-        console.log("Conectado ao banco de dados!");
-    }).catch((err)=>{
-        console.log("Erro ao contectar ao banco de dados. Erro: " + err);
-    });
 
 //Rotas
   require("./routes")(app);

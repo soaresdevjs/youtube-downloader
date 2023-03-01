@@ -1,0 +1,15 @@
+/* Fontes */
+@font-face {
+  font-family: 'mark-pro-regular';
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../../files/fonts/mark-pro-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'tiltWarp-regular';
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../../files/fonts/tiltWarp-regular.woff') format('woff');
+}

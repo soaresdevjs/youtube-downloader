@@ -1,0 +1,35 @@
+/* div.conteudo */
+div.conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+div.conteudo img.circulo {
+  width: 1000px;
+  position: absolute;
+  z-index: 1;
+}
+div.conteudo img.circulo.um {
+  top: -35%;
+  right: 45%;
+  animation: rodandoContrario 10s linear infinite;
+}
+div.conteudo img.circulo.dois {
+  top: 15%;
+  left: 70%;
+  animation: rodando 10s linear infinite;
+}
+@media screen and (max-width: 1000px) {
+  div.conteudo img.circulo.um {
+    top: 50%;
+    right: -600px;
+  }
+  div.conteudo img.circulo.dois {
+    top: -450px;
+    left: -250px;
+    width: 700px;
+  }
+}

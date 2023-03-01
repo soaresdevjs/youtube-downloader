@@ -1,0 +1,105 @@
+/* <section class="lateral"> */
+section.lateral {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: fixed;
+  padding: 60px;
+  height: calc(100% - 70px);
+  max-height: calc(100% - 70px);
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  background-color: rgba(18, 20, 22, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  z-index: 4;
+}
+section.lateral .logo {
+  position: relative;
+  width: 100%;
+}
+section.lateral .logo img:hover {
+  transform: rotate(-30deg) scale(1.1);
+}
+section.lateral .logo img {
+  position: absolute;
+  bottom: -400px;
+  left: 0;
+  width: 100%;
+  max-width: 300px;
+  transform: rotate(-30deg);
+  transition: all 0.3s;
+}
+section.lateral h2 {
+  font-family: var(--bold);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: var(--cor-branco);
+}
+section.lateral .item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+section.lateral .item .icone {
+  padding: 20px 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 0, 43, 0.2);
+  transition: all 0.3s;
+}
+section.lateral.audio .item .icone {
+  background-color: rgb(40, 152, 224, 0.2);
+}
+section.lateral .item:hover .icone {
+  background-color: rgba(255, 0, 43, 0.4);
+}
+section.lateral.audio .item:hover .icone {
+  background-color: rgb(40, 152, 224, 0.4);
+}
+section.lateral .item .icone img {
+  width: 100%;
+  max-width: 35px;
+}
+section.lateral .item .texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0 0 15px;
+}
+section.lateral .item .texto h3 {
+  font-family: var(--bold);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: var(--cor-branco);
+  line-height: 1.5;
+}
+section.lateral .item .texto p {
+  font-family: var(--regular);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  width: 100%;
+  max-width: 300px;
+}
+/* Responsivo */
+@media screen and (max-width: 1000px) {
+  section.lateral {
+    position: relative;
+    padding: 50px 20px;
+    height: auto;
+    max-height: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-right: none;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  section.lateral .logo img {
+    display: none;
+  }
+  section.lateral .item .icone img {
+    max-width: 30px;
+  }
+}

@@ -1,0 +1,170 @@
+/* <section class="principal"> */
+section.principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 70%;
+  padding: 140px 60px 80px 60px;
+  min-height: 50vh;
+  z-index: 3;
+}
+section.principal h2 {
+  font-family: var(--bold);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: var(--cor-branco);
+  line-height: 1.5;
+  width: 100%;
+  max-width: 400px;
+}
+section.principal h1 {
+  font-family: var(--regular);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+  width: 100%;
+  max-width: 500px;
+  margin: 15px 0 20px 0;
+}
+section.principal .carregamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 70px;
+  width: 70px;
+  animation: fadeIn 0.5s linear;
+}
+section.principal .carregamento .roda {
+  position: absolute;
+  border-radius: 50%;
+}
+section.principal .carregamento .roda.um {
+  width: 50px;
+  height: 50px;
+  animation: rodando 1s linear infinite;
+  border: 5px solid var(--cor-azul);
+  border-top: 5px solid transparent;
+}
+section.principal .carregamento .roda.dois {
+  width: 30px;
+  height: 30px;
+  animation: rodandoContrario 2s linear infinite;
+  border: 2px solid var(--cor-branco);
+  border-top: 2px solid transparent;
+}
+section.principal .carregamento .roda.tres {
+  width: 70px;
+  height: 70px;
+  animation: rodando 3s linear infinite;
+  border: 4px solid var(--cor-branco);
+  border-top: 4px solid transparent;
+}
+section.principal .video {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  position: relative;
+  pointer-events: none;
+  margin: 40px 0 0 0;
+}
+section.principal .video .tamanho {
+  width: 100%;
+  padding-top: 56.25%;
+  position: relative;
+}
+section.principal .video .tamanho .capa {
+  width: 100%;
+  height: 100%;
+  border: none;
+  position: absolute;
+  border-radius: 20px;
+  background-image: url('../../../../../../files/images/capa-exemplo.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+section.principal .video .tamanho .capa .frente {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 20px;
+  height: 100%;
+  width: 100%;
+}
+section.principal .video .tamanho .capa .texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: absolute;
+  border-radius: 20px;
+  padding: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+}
+section.principal .video .tamanho .capa .texto h3 {
+  font-family: var(--bold);
+  color: var(--cor-branco);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+}
+section.principal .video .tamanho .capa .texto p {
+  font-family: var(--regular);
+  color: var(--cor-branco);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  margin: 10px 0;
+}
+section.principal .video .tamanho .capa .texto h4 {
+  font-family: var(--bold);
+  color: var(--cor-branco);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+}
+section.principal .video .tamanho .imagem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.2);
+  border-radius: 20px;
+  background-image: url('../../../../../../files/images/capa-exemplo.png');
+  filter: blur(30px);
+  -webkit-filter: blur(30px);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+  z-index: 1;
+}
+/* Responsivo */
+@media screen and (max-width: 1000px) {
+  section.principal {
+    width: 100%;
+    padding: 100px 20px 50px 20px;
+    min-height: auto;
+  }
+  section.principal .formatos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 500px;
+    animation: fadeIn 0.5s linear;
+  }
+  section.principal .formatos button {
+    padding: 10px;
+    margin: 3px;
+  }
+  section.principal .formatos button h4 {
+    font-size: clamp(0.4rem, 3vw, 0.6rem);
+    margin: 0 5px 0 0;
+  }
+  section.principal .formatos button h5 {
+    font-size: clamp(0.7rem, 3vw, 0.9rem);
+  }
+}

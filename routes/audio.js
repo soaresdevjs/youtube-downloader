@@ -5,16 +5,10 @@ const express = require("express"),
   ffmpeg = require('ffmpeg-static'),
   fs = require('fs'),
   crypto = require('crypto'),
-  fsReadDirRecGen = require('fs-readdir-rec-gen'),
-  mongoose = require('mongoose');
+  fsReadDirRecGen = require('fs-readdir-rec-gen');
 
 //Tokens
   const inUseTokens = {};
-
-//Mongoose
-  require('../models/Estrelas')
-  const Estrelas = mongoose.model("estrelas");
-
 module.exports = (router) => {
 
 router.get('/audio', (req, res) =>{
@@ -174,18 +168,5 @@ router.post('/audio/baixar', (req, res) =>{
         });
       }
     })
-  })
-
-  router.post('/audio/estrelas', (req, res) =>{
-    const newPost = {
-      estrelas: req.body.estrelas,
-  }
-  new Estrelas(newPost).save().then((result) => {
-      console.log("Avaliado! " + result.estrelas);
-      res.status(204).send()
-  }).catch((err) =>{
-      console.log("Erro ao avaliar: " + err)
-      res.status(204).send()
-  })
   })
 }

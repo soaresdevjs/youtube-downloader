@@ -1,0 +1,12 @@
+/* Global */
+@import './fonts.css';
+@import './normalize.css';
+@import './loading.css';
+@import './scrollbar.css';
+@import './variables.css';
+@import './animations.css';
+@import './nav.css';
+@import './conteudo.css';
+@import './sectionInformacoes.css';
+@import './sectionLateral.css';
+@import './footer.css';

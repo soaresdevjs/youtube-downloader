@@ -1,0 +1,65 @@
+/* Loading */
+div.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--cor-secundaria);
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
+  transition: all 0.3s;
+}
+div.loading.ocultar {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+div.loading img {
+  width: 100%;
+  max-width: 100px;
+}
+div.loading .circulo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 240px;
+  width: 240px;
+  animation: fadeIn 0.5s linear;
+}
+div.loading .circulo div {
+  position: absolute;
+  border-radius: 50%;
+}
+div.loading .circulo .um {
+  width: 240px;
+  height: 240px;
+  animation: rodando 1s linear infinite;
+  border: 5px solid var(--cor-vermelho);
+  box-shadow: 0 0 50px 0 var(--cor-vermelho);
+  border-top: 5px solid transparent;
+}
+div.loading.audio .circulo .um {
+  border: 5px solid var(--cor-azul);
+  box-shadow: 0 0 50px 0 var(--cor-azul);
+}
+div.loading .circulo .dois {
+  width: 170px;
+  height: 170px;
+  animation: rodandoContrario 2s linear infinite;
+  border: 2px solid var(--cor-branco);
+  border-top: 2px solid transparent;
+}
+div.loading .circulo .tres {
+  width: 200px;
+  height: 200px;
+  animation: rodando 3s linear infinite;
+  border: 4px solid var(--cor-branco);
+  border-top: 4px solid transparent;
+}
