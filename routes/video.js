@@ -9,15 +9,15 @@ const express = require("express"),
 
 //Tokens
   const inUseTokens = {};
-module.exports = (router) => {
+  module.exports = (router) => {
 
   router.get('/', (req, res) =>{
     if (req.query.urlfail){
-      res.render('index', {message: "URL Inválida, verifique sua URL e tente novamente!", css: "./assets/css/pages/video/index/index.css?v=0.1"});
+      res.render('video/video-index', {message: "URL Inválida, verifique sua URL e tente novamente!", css: "./assets/css/pages/video/index/index.css?v=0.1", layout: "video.hbs"});
     }else if(req.query.private){
-      res.render('index', {message: "Esse vídeo é privado ou não foi encontrado.", css: "./assets/css/pages/video/index/index.css?v=0.1"});
+      res.render('video/video-index', {message: "Esse vídeo é privado ou não foi encontrado.", css: "./assets/css/pages/video/index/index.css?v=0.1", layout: "video.hbs"});
     }else{
-      res.render('index', {css: "./assets/css/pages/video/index/index.css?v=0.1"});
+      res.render('video/video-index', {css: "./assets/css/pages/video/index/index.css?v=0.1", layout: "video.hbs"});
     }
     
     function filtrarPorExtensao(fileName) {
@@ -67,7 +67,7 @@ module.exports = (router) => {
         Formatar18[0].qualityLabel = '144p';
         mp4Filtrados.push(Formatar18[0]);
 
-        res.render('video-download', {thumbnail: thumbnail, title: title, seconds: seconds, autor: autor, mp4: mp4Filtrados, webm: webmFiltrados, url: ref, css: "/assets/css/pages/video/formato/formato.css?v=0.1"})
+      res.render('video/video-download', {thumbnail: thumbnail, title: title, seconds: seconds, autor: autor, mp4: mp4Filtrados, webm: webmFiltrados, url: ref, css: "/assets/css/pages/video/formato/formato.css?v=0.1", layout: "video.hbs"})
       }).catch((err) => {
         res.redirect('/?private=true');
         console.log("Erro: " + err)
@@ -101,7 +101,8 @@ module.exports = (router) => {
     const url = req.body.url,
       titulo = req.body.titulo,
       thumbnail = req.body.thumbnail,
-      seconds = req.body.seconds;
+      seconds = req.body.seconds,
+      autor = req.body.autor;
    
     // Obter audio e video
     const audio = ytdl(url, { quality: 'highestaudio' }),
@@ -159,7 +160,7 @@ module.exports = (router) => {
   });
 
   ffmpegProcess.stdio[6].on('close', () => {
-    res.render('video-downloated', {formato: formato, title: titulo, token: token, thumbnail: thumbnail, seconds: seconds, css: "../assets/css/pages/video/sucesso/sucesso.css?v=0.1"})
+    res.render('video/video-downloated', {formato: formato, title: titulo, autor: autor, token: token, thumbnail: thumbnail, seconds: seconds, css: "../assets/css/pages/video/sucesso/sucesso.css?v=0.1", layout: "video.hbs"})
     });
   });
 
@@ -167,7 +168,6 @@ module.exports = (router) => {
     const formato = req.body.formato,
       token = req.body.token,
       titulo = req.body.titulo;
-      console.log(titulo)
     
     res.download(`${token}${formato}`, `dowwnload.com_${titulo}${formato}`, (err) => {
       if (err) {

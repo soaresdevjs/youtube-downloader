@@ -18,9 +18,10 @@ const app = express();
     app.use(express.static('public'));
 
 //Rotas
-  require("./routes")(app);
+  require("./routes")(app)
 
 const PORT = 8085
 app.listen(PORT, () => {
     console.log(`Servidor funcionando na porta http://localhost:${PORT}`);
 });
+  app.use(require('./routes'));

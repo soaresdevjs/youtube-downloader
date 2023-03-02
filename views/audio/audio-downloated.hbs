@@ -1,0 +1,208 @@
+<!-- Nav -->
+<nav class="audio">
+    <img src="../../files/images/audio/logo.svg" class="logo" alt="Download Video Youtube">
+    <a class="mp3" href="/audio">
+    Converter <span>Youtube</span> para <span>Vídeo</span> MP4
+    <img src="../../files/images/icone-musica.svg" alt="Download Video Youtube">
+    </a>
+</nav>
+
+<!-- Conteúdo -->
+<div class="conteudo">
+
+    <!-- Circulos -->
+    <img src="../../files/images/audio/circulo.png" class="circulo um" alt="Download Video Youtube">
+    <img src="../../files/images/audio/circulo.png" class="circulo dois" alt="Download Video Youtube">
+
+    <!-- Parte Principal -->
+    <section class="principal">
+    <h2>Vídeo convertido</h2>
+    <h1>Seu vídeo foi convertido para MP3 em 128kpbs com sucesso, clique abaixo para fazer o download..</h1>
+    <form action="/pt/audio/baixar" method="post">
+    <input type="hidden" name="formato" value="{{formato}}">
+    <input type="hidden" name="titulo" value="{{title}}">
+    <input type="hidden" name="token" value="{{token}}">
+        <button class="baixar">
+        <img src="../../files/images/icone-check.svg">
+        BAIXAR AGORA
+        </button>
+    </form>
+    <a href="/pt/audio">
+        <button class="outro">
+            Converter outro vídeo
+        </button>
+    </a>
+    <div class="video">
+        <div class="tamanho">
+            <div class="capa" style="background-image: url('{{thumbnail}}');">
+            <div class="texto">
+                <h3>{{title}}</h3>
+                <p>{{autor}}</p>
+                <h4>{{seconds}}</h4>
+            </div>
+            </div>
+            <div class="imagem" style="background-image: url('{{thumbnail}}');"></div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Parte Lateral -->
+    <section class="lateral audio">
+    <h2>Modo de usar</h2>
+    <div class="item">
+        <div class="icone">
+        <img src="../../files/images/audio/icone-link-vermelho.svg" alt="Download MP3 Youtube">
+        </div>
+        <div class="texto">
+        <h3>Cole o link do youtube</h3>
+        <p>Basta copiar da URL do navegador ou do botão compartilhar</p>
+        </div>
+    </div>
+    <div class="item">
+        <div class="icone">
+        <img src="../../files/images/audio/icone-ajustes.svg" alt="Download MP3 Youtube">
+        </div>
+        <div class="texto">
+        <h3>Escolha o formato</h3>
+        <p>Seleciona o formato que deseja baixar o vídeo que colou</p>
+        </div>
+    </div>
+    <div class="item">
+        <div class="icone">
+        <img src="../../files/images/audio/icone-download.svg" alt="Download MP3 Youtube">
+        </div>
+        <div class="texto">
+        <h3>Baixe com velocidade</h3>
+        <p>Após escolher o formato é só esperar um pouco e baixar</p>
+        </div>
+    </div>
+    <div class="logo">
+        <img src="../../files/images/audio/icone-logo.svg" alt="Download MP3 Youtube">
+    </div>
+    </section>
+
+    <!-- Parte Informações -->
+    <section class="informacoes audio">
+    <div class="duvidas">
+        <h2>Dúvidas frequentes</h2>
+        <div class="duvida mostrar">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>Quais formatos de vídeo posso baixar?</h3>
+        </div>
+        <p>No Download.com.br, você pode baixar vídeos do Youtube em alguns formatos, incluindo MP4, Webm e até mesmo converter o vídeo para mp3.</p>
+        </div>
+        <div class="duvida">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>É gratuito para fazer as conversões?</h3>
+        </div>
+        <p>Sim, o Download.com.br é totalmente gratuito e não requer registro ou instalação de softwares adicionais.</p>
+        </div>
+        <div class="duvida">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>Esse site é seguro?</h3>
+        </div>
+        <p>Sim, o Download.com.br é seguro e não requer informações pessoais para baixar vídeos do Youtube. Além disso, o site utiliza criptografia SSL para garantir a segurança dos usuários.</p>
+        </div>
+        <div class="duvida">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>Como posso escolher a qualidade do vídeo baixado?</h3>
+        </div>
+        <p>No Download.com.br, você pode escolher a qualidade do vídeo baixado antes de iniciar o download, basta selecionar a opção desejada na tela de download.</p>
+        </div>
+        <div class="duvida">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>O que devo fazer se o download falhar?</h3>
+        </div>
+        <p>Se o download falhar, você pode tentar novamente em alguns minutos ou entrar em contato com o suporte ao cliente para obter ajuda.</p>
+        </div>
+        <div class="duvida">
+        <div class="pergunta">
+            <div class="icone">
+            <img src="../../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
+            </div>
+            <h3>Existe algum limite para baixar vídeos?</h3>
+        </div>
+        <p>Não existe nenhum limite para baixar vídeos no Download.com.br, você pode baixar quantos vídeos desejar.</p>
+        </div>
+    </div>
+    <div class="beneficios">
+        <div class="item">
+        <div class="icone">
+            <img src="../../files/images/icone-musica.svg" alt="Download MP3 Youtube">
+        </div>
+        <div class="texto">
+            <h3>De graça</h3>
+            <p>Aqui você consegue baixar o áudio dos vídeos de graça</p>
+        </div>
+        </div>
+        <div class="item diferente">
+        <div class="texto">
+            <h3>Converter para MP4</h3>
+            <p>Também é possível fazer a conversão do vídeo baixado para MP4</p>
+        </div>
+        <div class="icone">
+            <img src="../../files/images/icone-monitor.svg" alt="Download MP3 Youtube">
+        </div>
+        </div>
+        <div class="item">
+        <div class="icone">
+            <img src="../../files/images/icone-documento.svg" alt="Download MP3 Youtube">
+        </div>
+        <div class="texto">
+            <h3>Vários formatos</h3>
+            <p>Aqui você consegue baixar o áudio dos vídeos em 64 ou 128kbs</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+    <div class="copy">
+        <img src="../../files/images/logo-branco.svg">
+        <p>download.com.br 2023. Todos os direitos reservados.</p>
+    </div>
+    <div class="opcoes">
+        <a>Termos de Uso</a>
+        <a>Política de Privacidade</a>
+        <a>Cookies</a>
+    </div>
+    </footer>
+
+</div>
+
+<!-- JS -->
+<script src="../../assets/js/global.js?v=0.1"></script>
+<script src="../../assets/js/duvidas.js?v=0.1"></script>
+<script type="text/javascript">
+    const downloadButton = document.querySelector('button.baixar'),
+        segundos = "{{seconds}}";
+
+    const segundosFormatados = () => {
+        const minutos = segundos / 60
+        const seconds = segundos % 60
+        return `${parseInt(minutos)}:${seconds.toString().padStart(2, '0')}`
+    }
+    
+    document.querySelector('.texto h4').innerHTML = `${segundosFormatados()}`
+
+    downloadButton.addEventListener('click', function() {
+        this.classList.add('confirmado')
+        this.innerText = "BAIXANDO..."
+    })
+</script>

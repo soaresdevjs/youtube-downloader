@@ -1,4 +1,12 @@
-  <!-- Conteúdo -->
+<!-- Nav -->
+  <nav>
+    <img src="../files/images/logo.svg" class="logo" alt="Download Video Youtube">
+    <a class="mp3" href="/pt/audio">
+      Converter <span>Youtube</span> para <span>Áudio</span> MP3
+      <img src="../files/images/icone-musica.svg" alt="Download Video Youtube">
+    </a>
+  </nav>
+<!-- Conteúdo -->
 <div class="conteudo">
 
   <!-- Circulos -->
@@ -9,12 +17,13 @@
   <section class="principal">
     <h2>Selecione o formato</h2>
     <h1>Seu vídeo foi encontrato, agora é só selecionar qual o formato que deseja para começar a conversão.</h1>
-    <form action="download" method="post" style="display: flex; flex-direction: column; align-items: center;">
+    <form action="/pt/download" method="post" style="display: flex; flex-direction: column; align-items: center;">
       <input type="hidden" name="url" value="{{url}}">
       <input type="hidden" name="titulo" value="{{title}}">
       <input type="hidden" name="token" value="{{token}}">
       <input type="hidden" name="thumbnail" value="{{thumbnail}}">
       <input type="hidden" name="seconds" value="{{seconds}}">
+      <input type="hidden" name="autor" value="{{autor}}">
       <div class="formatos">
           {{#if mp4}}
             {{#each mp4}}
@@ -33,7 +42,7 @@
           {{/each}}
         {{/if}}
       </div>
-      <button class="confirmar" type="submit" name="qualidade" >
+      <button class="confirmar" type="submit" name="qualidade">
         CONVERTER AGORA
       </button>
     </form>
@@ -201,9 +210,16 @@
 <script src="../assets/js/video/formatos.js?v=0.1"></script>
 <script type="text/javascript">
   const buttons = document.querySelectorAll('button.formato'),
-  confirmButton = document.querySelector('button.confirmar');
+  confirmButton = document.querySelector('button.confirmar'),
+  segundos = "{{seconds}}"
 
-  console.log(buttons)
+  const segundosFormatados = () => {
+        const minutos = segundos / 60
+        const seconds = segundos % 60
+        return `${parseInt(minutos)}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  document.querySelector('.texto h4').innerHTML = `${segundosFormatados()}`
 
   buttons.forEach(function(button) {
     button.addEventListener("click", function() {

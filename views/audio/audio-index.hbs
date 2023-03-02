@@ -1,28 +1,38 @@
+  
   <!-- Loading -->
-  <div class="loading">
+  <div class="loading audio">
     <div class="circulo">
-      <img src="./files/images/icone-logo.svg" alt="Download Video Youtube">
+      <img src="../files/images/audio/icone-logo.svg" alt="Download MP3 Youtube">
       <div class="um"></div>
       <div class="dois"></div>
       <div class="tres"></div>
     </div>
-  </div> 
- 
+  </div>
+  
+  <!-- Nav -->
+  <nav class="audio">
+    <img src="../files/images/audio/logo.svg" class="logo" alt="Download MP3 Youtube">
+    <a class="mp3" href="/">
+      Converter <span>Youtube</span> para <span>Vídeo</span> MP4
+      <img src="../files/images/icone-musica.svg" alt="Download MP3 Youtube">
+    </a>
+  </nav>
+
   <!-- Conteúdo -->
   <div class="conteudo">
 
     <!-- Circulos -->
-    <img src="./files/images/circulo.png" class="circulo um" alt="Download Video Youtube">
-    <img src="./files/images/circulo.png" class="circulo dois" alt="Download Video Youtube">
+    <img src="../files/images/audio/circulo.png" class="circulo um" alt="Download MP3 Youtube">
+    <img src="../files/images/audio/circulo.png" class="circulo dois" alt="Download MP3 Youtube">
 
     <!-- Parte Principal -->
     <section class="principal">
-      <h2>Converta os vídeos do youtube e baixe eles de graça</h2>
-      <h1>Baixe vídeos do youtube colando o link abaixo. Baixe em 1080p, 720p, MP4 e até mesmo WEBM.</h1>
-      <form action="{{route}}/formatar" method="post" class="campo">
-        <img src="./files/images/icone-link-branco.svg" class="icone" alt="Download Video Youtube">
+      <h2>Converta os vídeos do youtube e baixe o áudio de graça</h2>
+      <h1>Baixe o áudio de vídeos do youtube colando o link abaixo. Baixe em MP3 com 64 ou 128kbps.</h1>
+      <form action="/pt/audio/formatar" method="post" class="campo">
+        <img src="../files/images/icone-link-branco.svg" class="icone" alt="Download MP3 Youtube">
         <button class="converter">
-          <img src="./files/images/icone-check.svg">
+          <img src="../files/images/icone-check.svg">
           <h4>CONVERTER</h4>
         </button>
         <input type="url" spellcheck="false" id="url" name="url" placeholder="https://youtube.com...">
@@ -32,14 +42,15 @@
         <div class="roda dois"></div>
         <div class="roda tres"></div>
       </div>
-    <h1 style="color: red;">{{message}}</h1>
+      <h1 style="color: red;">{{message}}</h1>
     </section>
-        <!-- Parte Lateral -->
-    <section class="lateral">
+  
+    <!-- Parte Lateral -->
+    <section class="lateral audio">
       <h2>Modo de usar</h2>
       <div class="item">
         <div class="icone">
-          <img src="../files/images/icone-link-vermelho.svg" alt="Download Video Youtube">
+          <img src="../files/images/audio/icone-link-vermelho.svg" alt="Download MP3 Youtube">
         </div>
         <div class="texto">
           <h3>Cole o link do youtube</h3>
@@ -48,7 +59,7 @@
       </div>
       <div class="item">
         <div class="icone">
-          <img src="../files/images/icone-ajustes.svg" alt="Download Video Youtube">
+          <img src="../files/images/audio/icone-ajustes.svg" alt="Download MP3 Youtube">
         </div>
         <div class="texto">
           <h3>Escolha o formato</h3>
@@ -57,7 +68,7 @@
       </div>
       <div class="item">
         <div class="icone">
-          <img src="../files/images/icone-download.svg" alt="Download Video Youtube">
+          <img src="../files/images/audio/icone-download.svg" alt="Download MP3 Youtube">
         </div>
         <div class="texto">
           <h3>Baixe com velocidade</h3>
@@ -65,18 +76,18 @@
         </div>
       </div>
       <div class="logo">
-        <img src="../files/images/icone-logo.svg" alt="Download Video Youtube">
+        <img src="../files/images/audio/icone-logo.svg" alt="Download MP3 Youtube">
       </div>
     </section>
   
     <!-- Parte Informações -->
-    <section class="informacoes">
+    <section class="informacoes audio">
       <div class="duvidas">
         <h2>Dúvidas frequentes</h2>
         <div class="duvida mostrar">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>Quais formatos de vídeo posso baixar?</h3>
           </div>
@@ -85,7 +96,7 @@
         <div class="duvida">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>É gratuito para fazer as conversões?</h3>
           </div>
@@ -94,7 +105,7 @@
         <div class="duvida">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>Esse site é seguro?</h3>
           </div>
@@ -103,7 +114,7 @@
         <div class="duvida">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>Como posso escolher a qualidade do vídeo baixado?</h3>
           </div>
@@ -112,7 +123,7 @@
         <div class="duvida">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>O que devo fazer se o download falhar?</h3>
           </div>
@@ -121,7 +132,7 @@
         <div class="duvida">
           <div class="pergunta">
             <div class="icone">
-              <img src="../files/images/icone-seta.svg" alt="Download MP3 Youtube">
+              <img src="../files/images/audio/icone-seta.svg" alt="Download MP3 Youtube">
             </div>
             <h3>Existe algum limite para baixar vídeos?</h3>
           </div>
@@ -131,29 +142,29 @@
       <div class="beneficios">
         <div class="item">
           <div class="icone">
-            <img src="../files/images/icone-monitor.svg" alt="Download Video Youtube">
+            <img src="../files/images/icone-musica.svg" alt="Download MP3 Youtube">
           </div>
           <div class="texto">
-            <h3>720p e 1080p</h3>
-            <p>Aqui você consegue baixar vídeos do youtube em HD ou Full HD de graça</p>
+            <h3>De graça</h3>
+            <p>Aqui você consegue baixar o áudio dos vídeos de graça</p>
           </div>
         </div>
         <div class="item diferente">
           <div class="texto">
-            <h3>Converter para MP3</h3>
-            <p>Também é possível fazer a conversão do vídeo baixado para MP3</p>
+            <h3>Converter para MP4</h3>
+            <p>Também é possível fazer a conversão do vídeo baixado para MP4</p>
           </div>
           <div class="icone">
-            <img src="../files/images/icone-musica.svg" alt="Download Video Youtube">
+            <img src="../files/images/icone-monitor.svg" alt="Download MP3 Youtube">
           </div>
         </div>
         <div class="item">
           <div class="icone">
-            <img src="../files/images/icone-documento.svg" alt="Download Video Youtube">
+            <img src="../files/images/icone-documento.svg" alt="Download MP3 Youtube">
           </div>
           <div class="texto">
             <h3>Vários formatos</h3>
-            <p>Aqui você consegue baixar os vídeos em MP4, WebM e diversos formatos</p>
+            <p>Aqui você consegue baixar o áudio dos vídeos em 64 ou 128kbs</p>
           </div>
         </div>
       </div>
@@ -161,20 +172,21 @@
 
     <!-- Footer -->
     <footer>
-    <div class="copy">
-    <img src="./files/images/logo-branco.svg">
-    <p>download.com.br 2023. Todos os direitos reservados.</p>
-    </div>
-    <div class="opcoes">
-    <a>Termos de Uso</a>
-    <a>Política de Privacidade</a>
-    <a>Cookies</a>
-    </div>
-</footer>
+      <div class="copy">
+        <img src="../files/images/logo-branco.svg">
+        <p>download.com.br 2023. Todos os direitos reservados.</p>
+      </div>
+      <div class="opcoes">
+        <a>Termos de Uso</a>
+        <a>Política de Privacidade</a>
+        <a>Cookies</a>
+      </div>
+    </footer>
 
-      <!-- JS -->
-  <script src="./assets/js/global.js?v=0.1"></script>
-  <script src="./assets/js/loading.js?v=0.1"></script>
-  <script src="./assets/js/duvidas.js?v=0.1"></script>
-  <script src="./assets/js/video/campo.js?v=0.1"></script>
-</div>
+  </div>
+
+  <!-- JS -->
+  <script src="../assets/js/global.js?v=0.1"></script>
+  <script src="../assets/js/duvidas.js?v=0.1"></script>
+  <script src="../assets/js/loading.js?v=0.1"></script>
+  <script src="../assets/js/audio/campo.js?v=0.1"></script>

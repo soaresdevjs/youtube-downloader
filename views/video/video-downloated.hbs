@@ -1,3 +1,12 @@
+<!-- Nav -->
+<nav>
+<img src="../files/images/logo.svg" class="logo" alt="Download Video Youtube">
+<a class="mp3" href="/pt/audio">
+    Converter <span>Youtube</span> para <span>Áudio</span> MP3
+    <img src="../files/images/icone-musica.svg" alt="Download Video Youtube">
+</a>
+</nav>
+
 <!-- Conteúdo -->
 <div class="conteudo">
 
@@ -9,7 +18,7 @@
 <section class="principal">
     <h2>Vídeo convertido</h2>
     <h1>Seu vídeo foi convertido para MP4 na resolução 720p com sucesso, clique abaixo para baixar..</h1>
-    <form action="baixar" method="post">
+    <form action="/pt/baixar" method="post">
     <input type="hidden" name="formato" value="{{formato}}">
     <input type="hidden" name="titulo" value="{{title}}">
     <input type="hidden" name="token" value="{{token}}">
@@ -181,7 +190,16 @@
 <script src="./assets/js/global.js?v=0.1"></script>
 <script src="./assets/js/duvidas.js?v=0.1"></script>
 <script type="text/javascript">
-    const downloadButton = document.querySelector('button.baixar')
+    const downloadButton = document.querySelector('button.baixar'),
+        segundos = "{{seconds}}";
+
+    const segundosFormatados = () => {
+        const minutos = segundos / 60
+        const seconds = segundos % 60
+        return `${parseInt(minutos)}:${seconds.toString().padStart(2, '0')}`
+    }
+    
+    document.querySelector('.texto h4').innerHTML = `${segundosFormatados()}`
 
     downloadButton.addEventListener('click', function() {
         this.classList.add('confirmado')

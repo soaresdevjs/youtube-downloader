@@ -80,7 +80,6 @@ section.principal .video .tamanho .capa {
   border: none;
   position: absolute;
   border-radius: 20px;
-  background-image: url('../../../../../../files/images/capa-exemplo.png');
   background-size: cover;
   background-position: center;
   z-index: 2;
@@ -133,7 +132,6 @@ section.principal .video .tamanho .imagem {
   height: 100%;
   transform: scale(1.2);
   border-radius: 20px;
-  background-image: url('../../../../../../files/images/capa-exemplo.png');
   filter: blur(30px);
   -webkit-filter: blur(30px);
   background-size: cover;
